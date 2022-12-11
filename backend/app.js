@@ -2,11 +2,12 @@ const { ApolloServer } = require('apollo-server-express');
 const bodyParser = require('body-parser');
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 
-const PORT = process.env.PORT !== undefined ? process.env.PORT : 3000;
+const PORT = process.env.PORT !== undefined ? process.env.PORT : 5000;
 
 app.use(express.static('public'));
 app.use(bodyParser.json());
