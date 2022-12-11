@@ -1,11 +1,11 @@
 const typeDefs = `#graphql
     type Product {
-        id: Int
-        title: String
-        price: Float
-        description: String
-        category: String
-        image: String
+        id: Int!
+        title: String!
+        price: Float!
+        description: String!
+        category: String!
+        image: String!
         rating: ProductRating
         translations: [ProductTranslation]
     }
@@ -40,12 +40,40 @@ const typeDefs = `#graphql
     type NotAllowedError implements BaseError {
         message: String!
     }
+
+    type SuccessfullRequest {
+        message: String!
+    }
  
     union ProductResult = Product | NotFoundError
+    union DeleteProductResult =  SuccessfullRequest | NotFoundError
 
     type Query {
         products: [Product!]
         getProduct(id: Int!): ProductResult
+    }
+
+    input CreateProductInput {
+        title: String!
+        price: Float!
+        description: String!
+        category: String!
+        image: String!
+    }
+
+    input UpdateProductInput {
+        id: Int!
+        title: String
+        price: Float
+        description: String
+        category: String
+        image: String
+    }
+
+    type Mutation {
+        createProduct(input: CreateProductInput!): Product!
+        updateProduct(input: UpdateProductInput!): ProductResult
+        deleteProduct(id: Int!): NotFoundError!
     }
 `;
 
