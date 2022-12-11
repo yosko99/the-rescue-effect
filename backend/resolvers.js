@@ -1,28 +1,26 @@
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin'
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster'
-  }
-];
+const fs = require('fs');
+
+const rawdata = fs.readFileSync(require('path').resolve(__dirname, './data/products.json'));
+const products = JSON.parse(rawdata);
 
 const resolvers = {
   Query: {
-    books: () => books,
-    getBook: (parent, { title }) => {
-      const book = books.find((book) => book.title === title);
+    products: () => products,
 
-      if (book === undefined) {
+    getProduct: (_parent, { id }) => {
+      const product = products.find((product) => product.id === id);
+
+      if (product === undefined) {
         return {
           __typename: 'NotFoundError',
-          message: `Entity ${title} not found`
+          message: `Product with id ${id} not found.`
         };
-      } else {
-        return book;
       }
+
+      return {
+        __typename: 'Product',
+        ...product
+      };
     }
   }
 };

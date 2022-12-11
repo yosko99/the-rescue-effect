@@ -1,7 +1,24 @@
 const typeDefs = `#graphql
-    type Book {
+    type Product {
+        id: Int
         title: String
-        author: String
+        price: Float
+        description: String
+        category: String
+        image: String
+        rating: ProductRating
+        translations: [ProductTranslation]
+    }
+
+    type ProductRating {
+        rate: Float!
+        count: Int!
+    }
+
+    type ProductTranslation {
+        lang: String!
+        title: String!
+        description: String!
     }
 
     interface BaseError {
@@ -24,11 +41,11 @@ const typeDefs = `#graphql
         message: String!
     }
  
-    union BookResult = Book | NotFoundError
+    union ProductResult = Product | NotFoundError
 
     type Query {
-        books: [Book]
-        getBook(title: String!): BookResult
+        products: [Product!]
+        getProduct(id: Int!): ProductResult
     }
 `;
 

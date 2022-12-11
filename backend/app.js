@@ -8,13 +8,14 @@ const resolvers = require('./resolvers');
 
 const PORT = process.env.PORT !== undefined ? process.env.PORT : 3000;
 
+app.use(express.static('public'));
 app.use(bodyParser.json());
 
-const server = new ApolloServer({
+const apolloServer = new ApolloServer({
   introspection: true,
   typeDefs,
   resolvers,
-  formatError: error => {
+  formatError: (error) => {
     return error;
   },
   context: ({ req, res }) => {
@@ -26,7 +27,7 @@ const server = new ApolloServer({
 });
 
 app.listen(PORT, async () => {
-  await server.start();
-  server.applyMiddleware({ app, path: '/graphql' });
+  await apolloServer.start();
+  apolloServer.applyMiddleware({ app, path: '/graphql' });
   console.log(`app is listening to port ${PORT}`);
 });
