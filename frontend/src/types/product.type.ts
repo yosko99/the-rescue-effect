@@ -16,3 +16,11 @@ export interface ProductType {
     };
     translations: [ProductTranslationsType];
 }
+
+export interface CreateProductType {
+    title: string;
+    price: number;
+    description: string;
+    category: string;
+    image: string;
+}
