@@ -55,7 +55,7 @@ const typeDefs = `#graphql
 
     input CreateProductInput {
         title: String!
-        price: Float!
+        price: String!
         description: String!
         category: String!
         image: String!

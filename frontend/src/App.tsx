@@ -8,7 +8,7 @@ import MainPage from './views/MainPage';
 function App () {
   const client = new ApolloClient({
     cache: new InMemoryCache(),
-    uri: 'http://localhost:5000/graphql'
+    uri: '/graphql'
   });
 
   return (

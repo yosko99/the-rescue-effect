@@ -10,6 +10,7 @@ export interface ProductType {
     price: Number;
     description: string;
     category: string;
+    image: string;
     rating: {
         rate: Number;
         count: Number;
