@@ -1,13 +1,14 @@
-const { ApolloServer } = require('apollo-server-express');
-const bodyParser = require('body-parser');
-const express = require('express');
-const path = require('path');
+import { ApolloServer } from 'apollo-server-express';
+import * as bodyParser from 'body-parser';
+import express from 'express';
+import path from 'path';
+
+import resolvers from './resolvers';
+import typeDefs from './typeDefs';
+
 const app = express();
 
 require('dotenv').config();
-
-const typeDefs = require('./typeDefs');
-const resolvers = require('./resolvers');
 
 const PORT = process.env.PORT !== undefined ? process.env.PORT : 5000;
 
@@ -24,9 +25,9 @@ const apolloServer = new ApolloServer({
   context: ({ req, res }) => {
     return {
       req,
-      res
+      res,
     };
-  }
+  },
 });
 
 app.listen(PORT, async () => {

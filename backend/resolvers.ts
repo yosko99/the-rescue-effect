@@ -1,12 +1,14 @@
-const fs = require('fs');
+// @ts-nocheck
+import { readFileSync, writeFileSync } from 'fs';
 
 const PRODUCTS_DATA_ROUTE = require('path').resolve(
   __dirname,
+  '../',
   './data/products.json'
 );
 
-const rawdata = fs.readFileSync(PRODUCTS_DATA_ROUTE);
-const products = JSON.parse(rawdata);
+const rawdata = readFileSync(PRODUCTS_DATA_ROUTE);
+const products = JSON.parse(rawdata.toString());
 
 const resolvers = {
   Query: {
@@ -18,37 +20,46 @@ const resolvers = {
       if (product === undefined) {
         return {
           __typename: 'NotFoundError',
-          message: `Product with id ${id} not found.`
+          message: `Product with id ${id} not found.`,
         };
       }
 
       return {
         __typename: 'Product',
-        ...product
+        ...product,
       };
-    }
+    },
   },
 
   Mutation: {
-    createProduct: (_, { input: { title, price, description, category, image } }) => {
-      const maxId = Math.max(...products.map(product => product.id));
+    createProduct: (
+      _,
+      { input: { title, price, description, category, image } }
+    ) => {
+      const maxId = Math.max(...products.map((product) => product.id));
 
       const product = {
-        id: maxId + 1, title, price, description, category, image
+        id: maxId + 1,
+        title,
+        price,
+        description,
+        category,
+        image,
       };
 
       products.push(product);
 
-      fs.writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products), (err) => {
-        console.log(err);
-      });
+      writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products));
 
       return {
-        ...product
+        ...product,
       };
     },
 
-    updateProduct: (_, { input: { id, title, price, description, category, image } }) => {
+    updateProduct: (
+      _,
+      { input: { id, title, price, description, category, image } }
+    ) => {
       let productIndex = -1;
 
       for (let i = 0; i < products.length; i++) {
@@ -61,20 +72,25 @@ const resolvers = {
       if (productIndex === -1) {
         return {
           __typename: 'NotFoundError',
-          message: `Product with id ${id} not found.`
+          message: `Product with id ${id} not found.`,
         };
       }
 
-      const newProduct = { ...products[productIndex], title, price, description, category, image };
+      const newProduct = {
+        ...products[productIndex],
+        title,
+        price,
+        description,
+        category,
+        image,
+      };
       products[productIndex] = newProduct;
 
-      fs.writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products), (err) => {
-        console.log(err);
-      });
+      writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products));
 
       return {
         __typename: 'Product',
-        ...newProduct
+        ...newProduct,
       };
     },
 
@@ -91,21 +107,19 @@ const resolvers = {
       if (productIndex === -1) {
         return {
           __typename: 'NotFoundError',
-          message: `Product with id ${id} not found.`
+          message: `Product with id ${id} not found.`,
         };
       }
 
       products.splice(productIndex, 1);
 
-      fs.writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products), (err) => {
-        console.log(err);
-      });
+      writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products));
 
       return {
-        message: 'Delete successfull.'
+        message: 'Delete successfull.',
       };
-    }
-  }
+    },
+  },
 };
 
-module.exports = resolvers;
+export default resolvers;
