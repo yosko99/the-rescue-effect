@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import { useMutation } from '@apollo/client';
 
-import { CREATE_ANIMAL_MUTATION } from '../mutations/createAnimalMutation';
-import { GET_ANIMALS_QUERY } from '../queries/getAnimalsQuery';
+import { CREATE_ANIMAL_MUTATION } from '../mutations/animal.mutations';
+import { GET_ANIMALS_QUERY } from '../queries/animal.queries';
 import { CreateAnimalType } from '../types/animal.type';
 
 const CreateAnimalForm = () => {
