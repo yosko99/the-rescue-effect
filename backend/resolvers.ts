@@ -1,113 +1,88 @@
-// @ts-nocheck
-import { readFileSync, writeFileSync } from 'fs';
+import { PrismaClient } from '@prisma/client';
+import axios from 'axios';
 
-const PRODUCTS_DATA_ROUTE = require('path').resolve(
-  __dirname,
-  '../',
-  './data/products.json'
-);
+import IDogResponse from './types/IDogResponse';
 
-const rawdata = readFileSync(PRODUCTS_DATA_ROUTE);
-const products = JSON.parse(rawdata.toString());
+const prisma = new PrismaClient();
 
 const resolvers = {
   Query: {
-    animals: () => products,
+    animals: async () => await prisma.animal.findMany(),
 
-    getAnimal: (_, { id }) => {
-      const product = products.find((product) => product.id === id);
+    getAnimal: async (_, { id }) => {
+      const animal = await prisma.animal.findFirst({ where: { id } });
 
-      if (product === undefined) {
+      if (animal === null) {
         return {
           __typename: 'NotFoundError',
-          message: `Product with id ${id} not found.`,
+          message: `Animal with id ${id} not found.`,
         };
       }
 
       return {
-        __typename: 'Product',
-        ...product,
+        __typename: 'Animal',
+        ...animal,
       };
     },
   },
 
   Mutation: {
-    createAnimal: (_, { input: { name, age, description, category } }) => {
-      // TODO Add dog api for imageURL
-      const product = {
-        name,
-        age,
-        description,
-        category,
-        imageURL,
-      };
+    createAnimal: async (
+      _,
+      { input: { name, age, description, category } }
+    ) => {
+      const dogAPI = await axios.get('https://dog.ceo/api/breeds/image/random');
+      const dogData: IDogResponse = dogAPI.data;
 
-      products.push(product);
-
-      writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products));
+      const animal = await prisma.animal.create({
+        data: {
+          age: Number(age),
+          name,
+          description,
+          category,
+          imageURL: dogData.message,
+        },
+      });
 
       return {
-        ...product,
+        ...animal,
       };
     },
 
-    updateAnimal: (_, { input: { id, name, age, description, category } }) => {
-      let productIndex = -1;
-
-      for (let i = 0; i < products.length; i++) {
-        if (products[i].id === id) {
-          productIndex = i;
-          break;
-        }
-      }
-
-      if (productIndex === -1) {
-        return {
-          __typename: 'NotFoundError',
-          message: `Product with id ${id} not found.`,
-        };
-      }
-
-      const newProduct = {
-        ...products[productIndex],
-        title,
-        price,
-        description,
-        category,
-        image,
-      };
-      products[productIndex] = newProduct;
-
-      writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products));
+    updateAnimal: async (
+      _,
+      { input: { id, name, age, description, category } }
+    ) => {
+      const updatedProduct = await prisma.animal
+        .update({
+          where: { id },
+          data: { age, name, description, category },
+        })
+        .catch((_err) => {
+          return {
+            __typename: 'NotFoundError',
+            message: `Product with id ${id} not found.`,
+          };
+        });
 
       return {
-        __typename: 'Product',
-        ...newProduct,
+        __typename: 'Animal',
+        ...updatedProduct,
       };
     },
 
-    deleteAnimal: (_, { id }) => {
-      let productIndex = -1;
-
-      for (let i = 0; i < products.length; i++) {
-        if (products[i].id === id) {
-          productIndex = i;
-          break;
-        }
-      }
-
-      if (productIndex === -1) {
+    deleteAnimal: async (_, { id }) => {
+      try {
+        await prisma.animal.delete({ where: { id } });
+      } catch (error) {
         return {
           __typename: 'NotFoundError',
-          message: `Product with id ${id} not found.`,
+          message: `Animal with id ${id} not found.`,
         };
       }
 
-      products.splice(productIndex, 1);
-
-      writeFileSync(PRODUCTS_DATA_ROUTE, JSON.stringify(products));
-
       return {
+        __typename: 'SuccessfullRequest',
         message: 'Delete successfull.',
       };
     },

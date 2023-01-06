@@ -32,35 +32,33 @@ const typeDefs = `#graphql
         message: String!
     }
  
-    union AnimaResult = Animal | NotFoundError
+    union AnimalResult = Animal | NotFoundError
     union DeleteAnimalResult =  SuccessfullRequest | NotFoundError
 
     type Query {
         animals: [Animal!]
-        getAnimal(id: Int!): AnimaResult
+        getAnimal(id: Int!): AnimalResult
     }
 
     input CreateAnimalInput {
-        title: String!
-        price: String!
+        name: String!
+        age: Int!
         description: String!
         category: String!
-        image: String!
     }
 
     input UpdateAnimalInput {
         id: Int!
-        title: String
-        price: Float
+        name: String
+        age: Int
         description: String
         category: String
-        image: String
     }
 
     type Mutation {
         createAnimal(input: CreateAnimalInput!): Animal!
-        updateAnimal(input: UpdateAnimalInput!): AnimaResult
-        deleteAnimal(id: Int!): NotFoundError!
+        updateAnimal(input: UpdateAnimalInput!): AnimalResult
+        deleteAnimal(id: Int!): DeleteAnimalResult
     }
 `;
 
