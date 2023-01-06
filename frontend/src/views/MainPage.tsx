@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { useQuery } from '@apollo/client';
+import { Typography } from '@mui/material';
 
 import CreateProductForm from '../components/CreateProductForm';
-import Product from '../components/Product';
+import ProductCard from '../components/ProductCard';
 import { GET_PRODUCTS_QUERY } from '../queries/getProductsQuery';
 import { ProductType } from '../types/product.type';
 
@@ -18,12 +19,15 @@ const MainPage = () => {
     <div className='App-header'>
       <div className='container'>
         <CreateProductForm />
-
-        <div className='d-flex flex-wrap' >
+        <Typography align='center' fontSize={'1em'}>No data :(</Typography>
+        {data === undefined
+          ? <Typography align='center'>No data</Typography>
+          : <div className='d-flex flex-wrap' >
           {data.products.map((product: ProductType, index: number) => (
-            <Product key={index} product={product} />
+            <ProductCard key={index} product={product} />
           ))}
         </div>
+        }
       </div>
     </div>
   );
