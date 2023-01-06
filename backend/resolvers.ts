@@ -12,9 +12,9 @@ const products = JSON.parse(rawdata.toString());
 
 const resolvers = {
   Query: {
-    products: () => products,
+    animals: () => products,
 
-    getProduct: (_, { id }) => {
+    getAnimal: (_, { id }) => {
       const product = products.find((product) => product.id === id);
 
       if (product === undefined) {
@@ -32,19 +32,14 @@ const resolvers = {
   },
 
   Mutation: {
-    createProduct: (
-      _,
-      { input: { title, price, description, category, image } }
-    ) => {
-      const maxId = Math.max(...products.map((product) => product.id));
-
+    createAnimal: (_, { input: { name, age, description, category } }) => {
+      // TODO Add dog api for imageURL
       const product = {
-        id: maxId + 1,
-        title,
-        price,
+        name,
+        age,
         description,
         category,
-        image,
+        imageURL,
       };
 
       products.push(product);
@@ -56,10 +51,7 @@ const resolvers = {
       };
     },
 
-    updateProduct: (
-      _,
-      { input: { id, title, price, description, category, image } }
-    ) => {
+    updateAnimal: (_, { input: { id, name, age, description, category } }) => {
       let productIndex = -1;
 
       for (let i = 0; i < products.length; i++) {
@@ -94,7 +86,7 @@ const resolvers = {
       };
     },
 
-    deleteProduct: (_, { id }) => {
+    deleteAnimal: (_, { id }) => {
       let productIndex = -1;
 
       for (let i = 0; i < products.length; i++) {

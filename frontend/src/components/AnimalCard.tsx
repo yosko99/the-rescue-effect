@@ -6,26 +6,27 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 
-import { ProductType } from '../types/product.type';
+import { AnimalType } from '../types/animal.type';
 
 interface Props {
-  product: ProductType;
+  animal: AnimalType;
 }
-const ProductCard:React.FC<Props> = ({ product }) => {
+
+const AnimalCard:React.FC<Props> = ({ animal }) => {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardActionArea>
         <CardMedia
           component="img"
           height="140"
-          image={product.image}
+          image={animal.imageURL}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {product.title}
+            {animal.name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            {product.description}
+            {animal.description}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -38,4 +39,4 @@ const ProductCard:React.FC<Props> = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default AnimalCard;

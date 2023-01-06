@@ -1,24 +1,11 @@
 const typeDefs = `#graphql
-    type Product {
+    type Animal {
         id: Int!
-        title: String!
-        price: Float!
+        name: String!
+        age: Int!
         description: String!
         category: String!
-        image: String!
-        rating: ProductRating
-        translations: [ProductTranslation]
-    }
-
-    type ProductRating {
-        rate: Float!
-        count: Int!
-    }
-
-    type ProductTranslation {
-        lang: String!
-        title: String!
-        description: String!
+        imageURL: String!
     }
 
     interface BaseError {
@@ -45,15 +32,15 @@ const typeDefs = `#graphql
         message: String!
     }
  
-    union ProductResult = Product | NotFoundError
-    union DeleteProductResult =  SuccessfullRequest | NotFoundError
+    union AnimaResult = Animal | NotFoundError
+    union DeleteAnimalResult =  SuccessfullRequest | NotFoundError
 
     type Query {
-        products: [Product!]
-        getProduct(id: Int!): ProductResult
+        animals: [Animal!]
+        getAnimal(id: Int!): AnimaResult
     }
 
-    input CreateProductInput {
+    input CreateAnimalInput {
         title: String!
         price: String!
         description: String!
@@ -61,7 +48,7 @@ const typeDefs = `#graphql
         image: String!
     }
 
-    input UpdateProductInput {
+    input UpdateAnimalInput {
         id: Int!
         title: String
         price: Float
@@ -71,9 +58,9 @@ const typeDefs = `#graphql
     }
 
     type Mutation {
-        createProduct(input: CreateProductInput!): Product!
-        updateProduct(input: UpdateProductInput!): ProductResult
-        deleteProduct(id: Int!): NotFoundError!
+        createAnimal(input: CreateAnimalInput!): Animal!
+        updateAnimal(input: UpdateAnimalInput!): AnimaResult
+        deleteAnimal(id: Int!): NotFoundError!
     }
 `;
 

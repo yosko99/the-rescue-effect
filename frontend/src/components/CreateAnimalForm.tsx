@@ -2,35 +2,34 @@ import React, { useState } from 'react';
 
 import { useMutation, useQuery } from '@apollo/client';
 
-import { CREATE_PRODUCT_MUTATION } from '../mutations/createProductMutation';
-import { GET_PRODUCTS_QUERY } from '../queries/getProductsQuery';
-import { CreateProductType } from '../types/product.type';
+import { CREATE_ANIMAL_MUTATION } from '../mutations/createAnimalMutation';
+import { GET_ANIMALS_QUERY } from '../queries/getAnimalsQuery';
+import { CreateAnimalType } from '../types/animal.type';
 
-const CreateProductForm = () => {
-  const [productData, setProductData] = useState<CreateProductType>({
+const CreateAnimalForm = () => {
+  const [animalData, setAnimalData] = useState<CreateAnimalType>({
     category: '',
     description: '',
-    image: '',
-    price: 0,
-    title: ''
+    age: 0,
+    name: ''
   });
-  const [createProduct] = useMutation(CREATE_PRODUCT_MUTATION);
-  const { refetch } = useQuery(GET_PRODUCTS_QUERY);
+  const [createAnimal] = useMutation(CREATE_ANIMAL_MUTATION);
+  const { refetch } = useQuery(GET_ANIMALS_QUERY);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as HTMLInputElement;
 
-    setProductData(() => {
+    setAnimalData(() => {
       return {
-        ...productData,
-        [target.name as keyof CreateProductType]: target.value
+        ...animalData,
+        [target.name as keyof CreateAnimalType]: target.value
       };
     });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createProduct({ variables: { input: productData } });
+    createAnimal({ variables: { input: animalData } });
     refetch();
   };
 
@@ -38,14 +37,14 @@ const CreateProductForm = () => {
         <form className='d-flex flex-column mb-2' onChange={(e) => handleChange(e)} onSubmit={(e) => handleSubmit(e)}>
             <div>
                 <div className="form-group">
-                    <label htmlFor='title'>Title</label>
+                    <label htmlFor='name'>Name</label>
                     <input
                         type="text"
                         required
                         className="form-control"
-                        name='title'
-                        id="title"
-                        placeholder="Product title"
+                        name='name'
+                        id="name"
+                        placeholder="Name"
                     />
                 </div>
                 <div className="form-group">
@@ -56,30 +55,19 @@ const CreateProductForm = () => {
                         className="form-control"
                         name='description'
                         id="Description"
-                        placeholder="Product description"
+                        placeholder="Description"
                     />
                 </div>
                 <div className="form-group">
-                    <label htmlFor='image'>Image URL</label>
-                    <input
-                        type="text"
-                        required
-                        className="form-control"
-                        name='image'
-                        id="image"
-                        placeholder="Product image URL"
-                    />
-                </div>
-                <div className="form-group">
-                    <label htmlFor='price'>Price</label>
+                    <label htmlFor='age'>Age</label>
                     <input
                         type="number"
                         required
                         min={1}
                         className="form-control"
-                        name='price'
-                        id="price"
-                        placeholder="Product price"
+                        name='age'
+                        id="age"
+                        placeholder="Age"
                      />
                 </div>
                 <div className="form-group">
@@ -90,7 +78,7 @@ const CreateProductForm = () => {
                         className="form-control"
                         id="category"
                         name='category'
-                        placeholder="Product category"
+                        placeholder="Category"
                      />
                 </div>
             </div>
@@ -101,4 +89,4 @@ const CreateProductForm = () => {
   );
 };
 
-export default CreateProductForm;
+export default CreateAnimalForm;
