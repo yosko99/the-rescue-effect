@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 
 import { CREATE_ANIMAL_MUTATION } from '../mutations/createAnimalMutation';
 import { GET_ANIMALS_QUERY } from '../queries/getAnimalsQuery';
@@ -10,11 +10,10 @@ const CreateAnimalForm = () => {
   const [animalData, setAnimalData] = useState<CreateAnimalType>({
     category: '',
     description: '',
-    age: 0,
+    age: 1,
     name: ''
   });
   const [createAnimal] = useMutation(CREATE_ANIMAL_MUTATION);
-  const { refetch } = useQuery(GET_ANIMALS_QUERY);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as HTMLInputElement;
@@ -22,15 +21,14 @@ const CreateAnimalForm = () => {
     setAnimalData(() => {
       return {
         ...animalData,
-        [target.name as keyof CreateAnimalType]: target.value
+        [target.name as keyof CreateAnimalType]: target.name === 'age' ? Number(target.value) : target.value
       };
     });
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createAnimal({ variables: { input: animalData } });
-    refetch();
+    createAnimal({ variables: { input: animalData }, refetchQueries: [GET_ANIMALS_QUERY] });
   };
 
   return (

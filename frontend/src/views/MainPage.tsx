@@ -19,8 +19,7 @@ const MainPage = () => {
     <div className='App-header'>
       <div className='container'>
         <CreateAnimalForm />
-        <Typography align='center' fontSize={'1em'}>No data :(</Typography>
-        {data === undefined
+        {data.animals === undefined
           ? <Typography align='center'>No data</Typography>
           : <div className='d-flex flex-wrap' >
           {data.animals.map((animal: AnimalType, index: number) => (

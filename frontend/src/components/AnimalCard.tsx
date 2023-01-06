@@ -14,7 +14,7 @@ interface Props {
 
 const AnimalCard:React.FC<Props> = ({ animal }) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ minWidth: 200, margin: 1 }}>
       <CardActionArea>
         <CardMedia
           component="img"
@@ -31,7 +31,7 @@ const AnimalCard:React.FC<Props> = ({ animal }) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
+        <Button size="medium" color="info" variant='contained'>
           Share
         </Button>
       </CardActions>
