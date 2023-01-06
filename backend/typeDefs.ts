@@ -1,65 +1,10 @@
-const typeDefs = `#graphql
-    type Animal {
-        id: Int!
-        name: String!
-        age: Int!
-        description: String!
-        category: String!
-        imageURL: String!
-    }
+const { mergeTypeDefs } = require('@graphql-tools/merge');
 
-    interface BaseError {
-        message: String!
-    }
+const animalType = require('./graphql/types/animal.type');
+const errorsType = require('./graphql/types/errors.type');
 
-    type InvalidInputError implements BaseError {
-        message: String!
-    }
-    
-    type NotFoundError implements BaseError {
-        message: String!
-    }
-    
-    type UnknownError implements BaseError {
-        message: String!
-    }
-    
-    type NotAllowedError implements BaseError {
-        message: String!
-    }
+const schemas = [animalType, errorsType];
 
-    type SuccessfullRequest {
-        message: String!
-    }
- 
-    union AnimalResult = Animal | NotFoundError
-    union DeleteAnimalResult =  SuccessfullRequest | NotFoundError
-
-    type Query {
-        animals: [Animal!]
-        getAnimal(id: Int!): AnimalResult
-    }
-
-    input CreateAnimalInput {
-        name: String!
-        age: Int!
-        description: String!
-        category: String!
-    }
-
-    input UpdateAnimalInput {
-        id: Int!
-        name: String
-        age: Int
-        description: String
-        category: String
-    }
-
-    type Mutation {
-        createAnimal(input: CreateAnimalInput!): Animal!
-        updateAnimal(input: UpdateAnimalInput!): AnimalResult
-        deleteAnimal(id: Int!): DeleteAnimalResult
-    }
-`;
+const typeDefs = mergeTypeDefs(schemas);
 
 export default typeDefs;
