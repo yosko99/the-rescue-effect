@@ -8,10 +8,32 @@ datasource db {
 }
 
 model Animal {
-  id Int @id @default(autoincrement())
-  name String
-  age Int
+  id          String      @id @default(uuid())
+  name        String
+  age         Int
   description String
-  category String
-  imageURL String 
+  category    AnimalTypes
+  imageURL    String
+  isAdopted   Boolean     @default(false)
+  Person      Person?     @relation(fields: [personId], references: [id])
+  personId    String?
+}
+
+model Person {
+  id                String      @id @default(uuid())
+  name              String
+  email             String      @unique
+  gender            Genders
+  animals           Animal[]
+  animalPreferences AnimalTypes
+}
+
+enum Genders {
+  MALE
+  FEMALE
+}
+
+enum AnimalTypes {
+  CAT
+  DOG
 }

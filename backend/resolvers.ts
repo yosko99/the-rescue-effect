@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import axios from 'axios';
+import IAnimal from './types/IAnimal';
 
 import IDogResponse from './types/IDogResponse';
 
@@ -9,7 +10,7 @@ const resolvers = {
   Query: {
     animals: async () => await prisma.animal.findMany(),
 
-    getAnimal: async (_, { id }) => {
+    getAnimal: async (_prev: unknown, { id }: { id: string }) => {
       const animal = await prisma.animal.findFirst({ where: { id } });
 
       if (animal === null) {
@@ -27,12 +28,11 @@ const resolvers = {
   },
 
   Mutation: {
-    createAnimal: async (
-      _,
-      { input: { name, age, description, category } }
-    ) => {
+    createAnimal: async (_prev: unknown, { input }: { input: IAnimal }) => {
       const dogAPI = await axios.get('https://dog.ceo/api/breeds/image/random');
       const dogData: IDogResponse = dogAPI.data;
+
+      const { age, name, description, category } = input;
 
       const animal = await prisma.animal.create({
         data: {
@@ -49,10 +49,9 @@ const resolvers = {
       };
     },
 
-    updateAnimal: async (
-      _,
-      { input: { id, name, age, description, category } }
-    ) => {
+    updateAnimal: async (_prev: unknown, { input }: { input: IAnimal }) => {
+      const { id, age, name, description, category } = input;
+
       const updatedProduct = await prisma.animal
         .update({
           where: { id },
@@ -71,7 +70,7 @@ const resolvers = {
       };
     },
 
-    deleteAnimal: async (_, { id }) => {
+    deleteAnimal: async (_prev: unknown, { id }: { id: string }) => {
       try {
         await prisma.animal.delete({ where: { id } });
       } catch (error) {
