@@ -10,7 +10,7 @@ module.exports = `#graphql
     }
 
     input UpdateAnimalInput {
-        id: Int!
+        id: String!
         name: String
         age: Int
         description: String
@@ -20,10 +20,10 @@ module.exports = `#graphql
     type Mutation {
         createAnimal(input: CreateAnimalInput!): Animal!
         updateAnimal(input: UpdateAnimalInput!): AnimalResult
-        deleteAnimal(id: Int!): DeleteAnimalResult
+        deleteAnimal(id: String!): DeleteAnimalResult
     }
     type Animal {
-        id: Int!
+        id: String!
         name: String!
         age: Int!
         description: String!
@@ -32,6 +32,6 @@ module.exports = `#graphql
     }
     type Query {
         animals: [Animal!]
-        getAnimal(id: Int!): AnimalResult
+        getAnimal(id: String!): AnimalResult
     }
 `;

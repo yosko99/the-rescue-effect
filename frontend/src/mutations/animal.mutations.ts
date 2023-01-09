@@ -9,7 +9,7 @@ export const CREATE_ANIMAL_MUTATION = gql`
 `;
 
 export const DELETE_ANIMAL_MUTATION = gql`
-  mutation DeleteAnimal($id: Int!) {
+  mutation DeleteAnimal($id: String!) {
     deleteAnimal(id: $id) {
       ... on SuccessfullRequest {
         message

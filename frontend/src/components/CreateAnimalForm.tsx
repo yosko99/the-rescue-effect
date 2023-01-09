@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 
 import { useMutation } from '@apollo/client';
 
+import animalCategories from '../constants/animalCategories';
 import { CREATE_ANIMAL_MUTATION } from '../mutations/animal.mutations';
 import { GET_ANIMALS_QUERY } from '../queries/animal.queries';
 import { CreateAnimalType } from '../types/animal.type';
+import CustomRadioButton from './inputs/CustomRadioButton';
 
 const CreateAnimalForm = () => {
   const [animalData, setAnimalData] = useState<CreateAnimalType>({
-    category: '',
+    category: 'DOG',
     description: '',
     age: 1,
     name: ''
@@ -34,7 +36,7 @@ const CreateAnimalForm = () => {
   return (
         <form className='d-flex flex-column mb-2' onChange={(e) => handleChange(e)} onSubmit={(e) => handleSubmit(e)}>
             <div>
-                <div className="form-group">
+                <div className="form-group py-2">
                     <label htmlFor='name'>Name</label>
                     <input
                         type="text"
@@ -45,7 +47,7 @@ const CreateAnimalForm = () => {
                         placeholder="Name"
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group py-2">
                     <label htmlFor='description'>Description</label>
                     <input
                         type="text"
@@ -56,7 +58,7 @@ const CreateAnimalForm = () => {
                         placeholder="Description"
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group py-2">
                     <label htmlFor='age'>Age</label>
                     <input
                         type="number"
@@ -68,20 +70,13 @@ const CreateAnimalForm = () => {
                         placeholder="Age"
                      />
                 </div>
-                <div className="form-group">
+                <div className="form-group d-flex flex-column py-2">
                     <label htmlFor='category'>Category</label>
-                    <input
-                        type="text"
-                        required
-                        className="form-control"
-                        id="category"
-                        name='category'
-                        placeholder="Category"
-                     />
+                    <CustomRadioButton name='category' buttonData={animalCategories}/>
                 </div>
             </div>
-            <div>
-                <button type="submit" className="w-100 btn btn-success">Submit</button>
+            <div className='py-2'>
+                <button type="submit" className="w-100 btn btn-info">Submit</button>
             </div>
         </form>
   );

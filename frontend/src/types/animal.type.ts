@@ -1,5 +1,5 @@
 export interface AnimalType {
-  id: Number;
+  id: String;
   name: string;
   age: Number;
   description: string;
@@ -11,5 +11,5 @@ export interface CreateAnimalType {
   name: string;
   age: number;
   description: string;
-  category: string;
+  category: 'DOG' | 'CAT';
 }

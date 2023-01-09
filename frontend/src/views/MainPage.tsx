@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { useQuery } from '@apollo/client';
-import { Typography } from '@mui/material';
 
 import AnimalCard from '../components/AnimalCard';
 import CreateAnimalForm from '../components/CreateAnimalForm';
@@ -20,7 +19,7 @@ const MainPage = () => {
       <div className='container'>
         <CreateAnimalForm />
         {data.animals === undefined || data.animals.length === 0
-          ? <Typography align='center' variant='h3'>No data</Typography>
+          ? <p className='fs-3 text-center'>No data</p>
           : <div className='d-flex flex-wrap' >
           {data.animals.map((animal: AnimalType, index: number) => (
             <AnimalCard key={index} animal={animal} />
