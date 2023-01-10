@@ -1,4 +1,9 @@
 module.exports = `#graphql
+    type LoginResponse {
+        message: String!
+        token: String!
+    }
+
     union GetPersonResult = Person | NotFoundError
     union CreatePersonResult = Person | NotAllowedError
     union DeletePersonResult =  SuccessfullRequest | NotFoundError
@@ -7,6 +12,7 @@ module.exports = `#graphql
         name: String!
         email: String!
         gender: Genders!
+        password: String!
         animalPreferences: AnimalTypes!
     }
 
@@ -17,10 +23,16 @@ module.exports = `#graphql
         animalPreferences: AnimalTypes
     }
 
+    input LoginInput {
+        email: String!
+        password: String!
+    }
+
     type Mutation {
         createPerson(input: CreatePersonInput!): CreatePersonResult
         updatePerson(input: UpdatePersonInput!): GetPersonResult
         deletePerson(id: String!): DeletePersonResult
+        login(input: LoginInput!): LoginResponse
     }
 
     type Person {

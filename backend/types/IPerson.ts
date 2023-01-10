@@ -8,6 +8,7 @@ interface IPerson {
   animals: IAnimal[];
   animalPreferences: 'DOG' | 'CAT';
   imageURL: string;
+  password: string;
 }
 
 export default IPerson;

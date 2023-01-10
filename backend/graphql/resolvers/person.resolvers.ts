@@ -1,8 +1,12 @@
 import { PrismaClient } from '@prisma/client';
+import * as bcryptjs from 'bcryptjs';
 import axios from 'axios';
 
 import IRandomUserResponse from '../../types/IRandomUserResponse';
 import IPerson from '../../types/IPerson';
+
+import checkExistingUserByEmail from '../functions/user/checkExistingUserByEmail';
+import generateToken from '../../functions/generateToken';
 
 const prisma = new PrismaClient();
 
@@ -41,7 +45,9 @@ module.exports = {
       const dogAPI = await axios.get('https://randomuser.me/api/');
       const dogData: IRandomUserResponse = dogAPI.data;
 
-      const { animalPreferences, email, gender, name } = input;
+      const { animalPreferences, email, gender, name, password } = input;
+
+      const hashedPassword = await bcryptjs.hash(password, 10);
 
       const doesUserExists =
         (await prisma.person.findUnique({
@@ -55,6 +61,7 @@ module.exports = {
             email,
             gender,
             name,
+            password: hashedPassword,
             imageURL: dogData.results[0].picture.large,
           },
         });
@@ -80,9 +87,6 @@ module.exports = {
             animalPreferences,
             gender,
             name,
-            animals: {
-              connect: { id: 'dd89f239-6f74-4259-8464-d36f3025d202' },
-            },
           },
         })
         .catch((_err) => {
@@ -112,6 +116,27 @@ module.exports = {
         __typename: 'SuccessfullRequest',
         message: 'Delete successfull.',
       };
+    },
+
+    login: async (
+      _prev: unknown,
+      { input }: { input: { password: string; email: string } }
+    ) => {
+      const user = await checkExistingUserByEmail(input.email);
+
+      const isPasswordValid = await bcryptjs.compareSync(
+        input.password,
+        user.password
+      );
+
+      if (isPasswordValid) {
+        return {
+          message: 'You have logged in successfully.',
+          token: generateToken(user.email, input.password),
+        };
+      }
+
+      throw new Error('Password mistmatch');
     },
   },
 };

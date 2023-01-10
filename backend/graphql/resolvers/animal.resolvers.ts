@@ -8,7 +8,9 @@ const prisma = new PrismaClient();
 
 module.exports = {
   Query: {
-    animals: async () => await prisma.animal.findMany(),
+    animals: async () => {
+      return await prisma.animal.findMany();
+    },
 
     getAnimal: async (_prev: unknown, { id }: { id: string }) => {
       const animal = await prisma.animal.findFirst({ where: { id } });
