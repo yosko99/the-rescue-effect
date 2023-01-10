@@ -22,7 +22,7 @@ const CustomRadioButton: React.FC<Props> = ({ buttonData, name }) => {
         key={index}
         id={button.value}
         type="radio"
-        variant={button.value === radioValue ? 'primary' : 'info'}
+        variant={button.value === radioValue ? 'primary' : 'light'}
         name={name}
         value={button.value}
         checked={radioValue === button.value}

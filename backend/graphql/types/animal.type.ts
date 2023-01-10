@@ -6,7 +6,7 @@ module.exports = `#graphql
         name: String!
         age: Int!
         description: String!
-        category: String!
+        category: AnimalTypes!
     }
 
     input UpdateAnimalInput {
@@ -14,7 +14,7 @@ module.exports = `#graphql
         name: String
         age: Int
         description: String
-        category: String
+        category: AnimalTypes
     }
 
     type Mutation {
@@ -27,11 +27,16 @@ module.exports = `#graphql
         name: String!
         age: Int!
         description: String!
-        category: String!
+        category: AnimalTypes!
         imageURL: String!
     }
     type Query {
         animals: [Animal!]
         getAnimal(id: String!): AnimalResult
+    }
+
+    enum AnimalTypes {
+        CAT
+        DOG
     }
 `;

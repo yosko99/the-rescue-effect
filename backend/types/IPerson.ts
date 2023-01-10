@@ -7,6 +7,7 @@ interface IPerson {
   gender: 'MALE' | 'FEMALE';
   animals: IAnimal[];
   animalPreferences: 'DOG' | 'CAT';
+  imageURL: string;
 }
 
 export default IPerson;

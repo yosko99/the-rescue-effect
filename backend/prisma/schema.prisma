@@ -15,8 +15,8 @@ model Animal {
   category    AnimalTypes
   imageURL    String
   isAdopted   Boolean     @default(false)
-  Person      Person?     @relation(fields: [personId], references: [id])
-  personId    String?
+  Person      Person?     @relation(fields: [personId], references: [id], onDelete: Cascade)
+  personId    String?     @unique
 }
 
 model Person {
@@ -26,6 +26,7 @@ model Person {
   gender            Genders
   animals           Animal[]
   animalPreferences AnimalTypes
+  imageURL          String
 }
 
 enum Genders {

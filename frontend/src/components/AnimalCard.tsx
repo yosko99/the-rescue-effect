@@ -22,7 +22,7 @@ const AnimalCard:React.FC<Props> = ({ animal }) => {
     <Card className='text-black'>
       <Card.Img style={{ width: '250px', height: '250px', objectFit: 'cover' }} variant="top" src={animal.imageURL} />
       <Card.Body>
-        <Card.Title>{`${animal.name} (${animal.age} years) `}</Card.Title>
+        <Card.Title>{`${animal.name} (${animal.age} ${animal.age === 1 ? 'year' : 'years'}) `}</Card.Title>
         <Card.Text className='fs-5'>{animal.description}</Card.Text>
         <Button variant='danger' onClick={handleDelete}>Delete</Button>
       </Card.Body>
