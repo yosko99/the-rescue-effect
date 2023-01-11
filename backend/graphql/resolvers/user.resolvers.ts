@@ -133,11 +133,9 @@ module.exports = {
 
       const { email } = getTokenData(ctx);
 
-      const user = await prisma.user.findUnique({ where: { email } });
-
       await prisma.animal.update({
         where: { id: animalID },
-        data: { userId: user?.id, isAdopted: true },
+        data: { User: { connect: { email } }, isAdopted: true },
       });
 
       return {

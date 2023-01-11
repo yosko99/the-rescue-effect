@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { useQuery } from '@apollo/client';
+import { Col, Row } from 'react-bootstrap';
 
 import AnimalCard from '../components/AnimalCard';
 import CreateAnimalForm from '../components/CreateAnimalForm';
@@ -20,11 +21,13 @@ const MainPage = () => {
         <CreateAnimalForm />
         {data.getAnimalsForAdoption === undefined || data.getAnimalsForAdoption.length === 0
           ? <p className='fs-3 text-center'>No data</p>
-          : <div className='d-flex flex-wrap' >
+          : <Row>
           {data.getAnimalsForAdoption.map((animal: AnimalType, index: number) => (
-            <AnimalCard key={index} animal={animal} />
+            <Col lg={3} md={6} sm={12} className='my-2' key={index}>
+              <AnimalCard animal={animal} />
+            </Col>
           ))}
-        </div>
+        </Row>
         }
       </div>
     </div>

@@ -15,8 +15,8 @@ model Animal {
   category    AnimalTypes
   imageURL    String
   isAdopted   Boolean     @default(false)
-  User        User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String?
+  User        User?       @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+  userEmail   String?
 }
 
 model User {
