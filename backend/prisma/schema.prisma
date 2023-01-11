@@ -16,7 +16,7 @@ model Animal {
   imageURL    String
   isAdopted   Boolean     @default(false)
   User        User?       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId      String?     @unique
+  userId      String?
 }
 
 model User {

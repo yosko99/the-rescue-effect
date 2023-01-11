@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import getAnimalPicture from '../functions/animal/getAnimalPicture';
 
 import { IAnimal } from '../../types/IAnimal';
+import checkExistingAnimalByID from '../functions/animal/checkExistingAnimalByID';
 
 const prisma = new PrismaClient();
 
@@ -13,16 +14,13 @@ module.exports = {
     },
 
     getAnimal: async (_prev: unknown, { id }: { id: string }) => {
-      const animal = await prisma.animal.findFirst({ where: { id } });
+      const animal = await checkExistingAnimalByID(id);
 
-      if (animal === null) {
-        throw new Error(`Animal with id ${id} not found.`);
-      }
+      return animal;
+    },
 
-      return {
-        __typename: 'Animal',
-        ...animal,
-      };
+    getAnimalsForAdoption: async () => {
+      return await prisma.animal.findMany({ where: { isAdopted: false } });
     },
   },
 

@@ -31,7 +31,8 @@ module.exports = `#graphql
         imageURL: String!
     }
     type Query {
-        animals: [Animal!]
+        animals: [Animal]
+        getAnimalsForAdoption: [Animal]
         getAnimal(id: String!): Animal
     }
 

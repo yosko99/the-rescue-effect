@@ -31,3 +31,17 @@ export interface ILoginResponse {
     token: string;
   };
 }
+
+export const ADOPT_ANIMAL_MUTATION = gql`
+  mutation AdoptAnimal($animalID: String!) {
+    adoptAnimal(animalID: $animalID) {
+      message
+    }
+  }
+`;
+
+export interface IAdoptAnimalResponse {
+  adoptAnimal: {
+    message: string;
+  };
+}

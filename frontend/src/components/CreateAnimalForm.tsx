@@ -4,7 +4,7 @@ import { useMutation } from '@apollo/client';
 
 import animalCategories from '../constants/animalCategories';
 import { CREATE_ANIMAL_MUTATION } from '../mutations/animal.mutations';
-import { GET_ANIMALS_QUERY } from '../queries/animal.queries';
+import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../queries/animal.queries';
 import { CreateAnimalType } from '../types/animal.type';
 import CustomInputWithLabel from './inputs/CustomInputWithLabel';
 import CustomRadioButton from './inputs/CustomRadioButton';
@@ -31,7 +31,7 @@ const CreateAnimalForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createAnimal({ variables: { input: animalData }, refetchQueries: [GET_ANIMALS_QUERY] });
+    createAnimal({ variables: { input: animalData }, refetchQueries: [GET_ANIMALS_FOR_ADOPTION_QUERY] });
   };
 
   return (

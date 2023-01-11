@@ -6,7 +6,13 @@ import IRandomUserAPI from '../../types/api/IRandomUserAPI';
 import IUser from '../../types/IUser';
 
 import checkExistingUserByEmail from '../functions/user/checkExistingUserByEmail';
+import checkExistingUserByID from '../functions/user/checkExistingUserByID';
+
+import checkExistingAnimalByID from '../functions/animal/checkExistingAnimalByID';
+
 import generateToken from '../../functions/generateToken';
+import IContext from '../../types/IContext';
+import getTokenData from '../functions/user/getTokenData';
 
 const prisma = new PrismaClient();
 
@@ -21,10 +27,7 @@ module.exports = {
     },
 
     getUser: async (_prev: unknown, { id }: { id: string }) => {
-      const user = await prisma.user.findFirst({
-        where: { id },
-        include: { animals: true },
-      });
+      const user = await checkExistingUserByID(id);
 
       if (user === null) {
         throw new Error(`User with id ${id} not found.`);
@@ -119,6 +122,27 @@ module.exports = {
       }
 
       throw new Error('Password mistmatch');
+    },
+
+    adoptAnimal: async (
+      _prev: unknown,
+      { animalID }: { animalID: string },
+      ctx: IContext
+    ) => {
+      const animal = await checkExistingAnimalByID(animalID);
+
+      const { email } = getTokenData(ctx);
+
+      const user = await prisma.user.findUnique({ where: { email } });
+
+      await prisma.animal.update({
+        where: { id: animalID },
+        data: { userId: user?.id, isAdopted: true },
+      });
+
+      return {
+        message: `Congratulations you adopted ${animal.name}`,
+      };
     },
   },
 };

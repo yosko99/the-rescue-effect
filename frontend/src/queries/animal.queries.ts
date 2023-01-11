@@ -12,3 +12,16 @@ export const GET_ANIMALS_QUERY = gql`
     }
   }
 `;
+
+export const GET_ANIMALS_FOR_ADOPTION_QUERY = gql`
+  query GetAnimalsForAdoption {
+    getAnimalsForAdoption {
+      name
+      id
+      age
+      description
+      category
+      imageURL
+    }
+  }
+`;

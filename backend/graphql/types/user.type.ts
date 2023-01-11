@@ -35,6 +35,7 @@ module.exports = `#graphql
         updateUser(input: UpdateUserInput!): User
         deleteUser(id: String!): SuccessfullRequest
         login(input: LoginInput!): LoginResponse
+        adoptAnimal(animalID: String!): SuccessfullRequest
     }
 
     type User {
