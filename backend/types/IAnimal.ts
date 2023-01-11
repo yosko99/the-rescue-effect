@@ -6,7 +6,7 @@ interface IAnimal {
   category: 'DOG' | 'CAT';
   imageURL: string;
   isAdopted: boolean;
-  personId: string;
+  userId: string;
 }
 
 export default IAnimal;

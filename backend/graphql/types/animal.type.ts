@@ -18,9 +18,9 @@ module.exports = `#graphql
     }
 
     type Mutation {
-        createAnimal(input: CreateAnimalInput!): Animal!
-        updateAnimal(input: UpdateAnimalInput!): AnimalResult
-        deleteAnimal(id: String!): DeleteAnimalResult
+        createAnimal(input: CreateAnimalInput!): Animal
+        updateAnimal(input: UpdateAnimalInput!): Animal
+        deleteAnimal(id: String!): SuccessfullRequest
     }
     type Animal {
         id: String!
@@ -32,7 +32,7 @@ module.exports = `#graphql
     }
     type Query {
         animals: [Animal!]
-        getAnimal(id: String!): AnimalResult
+        getAnimal(id: String!): Animal
     }
 
     enum AnimalTypes {

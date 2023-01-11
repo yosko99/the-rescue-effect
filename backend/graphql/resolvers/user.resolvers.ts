@@ -3,7 +3,7 @@ import * as bcryptjs from 'bcryptjs';
 import axios from 'axios';
 
 import IRandomUserResponse from '../../types/IRandomUserResponse';
-import IPerson from '../../types/IPerson';
+import IUser from '../../types/IUser';
 
 import checkExistingUserByEmail from '../functions/user/checkExistingUserByEmail';
 import generateToken from '../../functions/generateToken';
@@ -12,36 +12,30 @@ const prisma = new PrismaClient();
 
 module.exports = {
   Query: {
-    persons: async () => {
-      const persons = await prisma.person.findMany({
+    users: async () => {
+      const users = await prisma.user.findMany({
         include: { animals: true },
       });
 
-      return persons;
+      return users;
     },
 
-    getPerson: async (_prev: unknown, { id }: { id: string }) => {
-      const person = await prisma.person.findFirst({
+    getUser: async (_prev: unknown, { id }: { id: string }) => {
+      const user = await prisma.user.findFirst({
         where: { id },
         include: { animals: true },
       });
 
-      if (person === null) {
-        return {
-          __typename: 'NotFoundError',
-          message: `Person with id ${id} not found.`,
-        };
+      if (user === null) {
+        throw new Error(`User with id ${id} not found.`);
       }
 
-      return {
-        __typename: 'Person',
-        ...person,
-      };
+      return user;
     },
   },
 
   Mutation: {
-    createPerson: async (_prev: unknown, { input }: { input: IPerson }) => {
+    createUser: async (_prev: unknown, { input }: { input: IUser }) => {
       const dogAPI = await axios.get('https://randomuser.me/api/');
       const dogData: IRandomUserResponse = dogAPI.data;
 
@@ -50,12 +44,12 @@ module.exports = {
       const hashedPassword = await bcryptjs.hash(password, 10);
 
       const doesUserExists =
-        (await prisma.person.findUnique({
+        (await prisma.user.findUnique({
           where: { email },
         })) !== null;
 
       if (!doesUserExists) {
-        const person = await prisma.person.create({
+        const user = await prisma.user.create({
           data: {
             animalPreferences: animalPreferences,
             email,
@@ -66,21 +60,19 @@ module.exports = {
           },
         });
         return {
-          __typename: 'Person',
-          ...person,
+          user,
+          message: 'User created successfully.',
+          token: generateToken(email, hashedPassword),
         };
       }
 
-      return {
-        __typename: 'NotAllowedError',
-        message: `User with provided email already exists.`,
-      };
+      throw new Error('User with provided email already exists.');
     },
 
-    updatePerson: async (_prev: unknown, { input }: { input: IPerson }) => {
+    updateUser: async (_prev: unknown, { input }: { input: IUser }) => {
       const { id, animalPreferences, gender, name } = input;
 
-      const updatedPerson = await prisma.person
+      const updatedUser = await prisma.user
         .update({
           where: { id },
           data: {
@@ -90,30 +82,20 @@ module.exports = {
           },
         })
         .catch((_err) => {
-          return {
-            __typename: 'NotFoundError',
-            message: `Person with id ${id} not found.`,
-          };
+          throw new Error(`User with id ${id} not found.`);
         });
 
-      return {
-        __typename: 'Person',
-        ...updatedPerson,
-      };
+      return updatedUser;
     },
 
-    deletePerson: async (_prev: unknown, { id }: { id: string }) => {
+    deleteUser: async (_prev: unknown, { id }: { id: string }) => {
       try {
-        await prisma.person.delete({ where: { id } });
+        await prisma.user.delete({ where: { id } });
       } catch (error) {
-        return {
-          __typename: 'NotFoundError',
-          message: `Person with id ${id} not found.`,
-        };
+        throw new Error(`User with id ${id} not found.`);
       }
 
       return {
-        __typename: 'SuccessfullRequest',
         message: 'Delete successfull.',
       };
     },

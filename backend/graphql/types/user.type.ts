@@ -4,11 +4,13 @@ module.exports = `#graphql
         token: String!
     }
 
-    union GetPersonResult = Person | NotFoundError
-    union CreatePersonResult = Person | NotAllowedError
-    union DeletePersonResult =  SuccessfullRequest | NotFoundError
+    type CreateUserResponse {
+        user: User!
+        message: String!
+        token: String!
+    }
 
-    input CreatePersonInput {
+    input CreateUserInput {
         name: String!
         email: String!
         gender: Genders!
@@ -16,7 +18,7 @@ module.exports = `#graphql
         animalPreferences: AnimalTypes!
     }
 
-    input UpdatePersonInput {
+    input UpdateUserInput {
         id: String!
         name: String
         gender: Genders
@@ -29,13 +31,13 @@ module.exports = `#graphql
     }
 
     type Mutation {
-        createPerson(input: CreatePersonInput!): CreatePersonResult
-        updatePerson(input: UpdatePersonInput!): GetPersonResult
-        deletePerson(id: String!): DeletePersonResult
+        createUser(input: CreateUserInput!): CreateUserResponse
+        updateUser(input: UpdateUserInput!): User
+        deleteUser(id: String!): SuccessfullRequest
         login(input: LoginInput!): LoginResponse
     }
 
-    type Person {
+    type User {
         id: String!
         name: String!
         email: String!
@@ -46,8 +48,8 @@ module.exports = `#graphql
     }
     
     type Query {
-        persons: [Person]!
-        getPerson(id: String!): GetPersonResult
+        users: [User]!
+        getUser(id: String!): User
     }
 
     enum Genders {

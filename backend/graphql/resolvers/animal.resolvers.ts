@@ -16,10 +16,7 @@ module.exports = {
       const animal = await prisma.animal.findFirst({ where: { id } });
 
       if (animal === null) {
-        return {
-          __typename: 'NotFoundError',
-          message: `Animal with id ${id} not found.`,
-        };
+        throw new Error(`Animal with id ${id} not found.`);
       }
 
       return {
@@ -46,44 +43,32 @@ module.exports = {
         },
       });
 
-      return {
-        ...animal,
-      };
+      return animal;
     },
 
     updateAnimal: async (_prev: unknown, { input }: { input: IAnimal }) => {
       const { id, age, name, description, category } = input;
 
-      const updatedProduct = await prisma.animal
+      const updatedAnimal = await prisma.animal
         .update({
           where: { id },
           data: { age, name, description, category },
         })
         .catch((_err) => {
-          return {
-            __typename: 'NotFoundError',
-            message: `Product with id ${id} not found.`,
-          };
+          throw new Error(`Animal with id ${id} not found.`);
         });
 
-      return {
-        __typename: 'Animal',
-        ...updatedProduct,
-      };
+      return updatedAnimal;
     },
 
     deleteAnimal: async (_prev: unknown, { id }: { id: string }) => {
       try {
         await prisma.animal.delete({ where: { id } });
       } catch (error) {
-        return {
-          __typename: 'NotFoundError',
-          message: `Animal with id ${id} not found.`,
-        };
+        throw new Error(`Animal with id ${id} not found.`);
       }
 
       return {
-        __typename: 'SuccessfullRequest',
         message: 'Delete successfull.',
       };
     },

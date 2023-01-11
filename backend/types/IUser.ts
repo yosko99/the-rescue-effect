@@ -1,6 +1,6 @@
 import IAnimal from './IAnimal';
 
-interface IPerson {
+interface IUser {
   id: string;
   name: string;
   email: string;
@@ -11,4 +11,4 @@ interface IPerson {
   password: string;
 }
 
-export default IPerson;
+export default IUser;
