@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-import { AnimalCategories } from '../../../types/IAnimal';
+import { AnimalCategoriesType } from '../../../types/IAnimal';
 import CatTypeAPI from '../../../types/api/ICatAPI';
 import IDogAPI from '../../../types/api/IDogAPI';
 
-const getAnimalPicture = async (category: AnimalCategories) => {
+const getAnimalPicture = async (category: AnimalCategoriesType) => {
   let animalPicture: string;
 
   switch (category) {

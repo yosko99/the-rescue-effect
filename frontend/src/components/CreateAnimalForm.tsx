@@ -6,6 +6,7 @@ import animalCategories from '../constants/animalCategories';
 import { CREATE_ANIMAL_MUTATION } from '../mutations/animal.mutations';
 import { GET_ANIMALS_QUERY } from '../queries/animal.queries';
 import { CreateAnimalType } from '../types/animal.type';
+import CustomInputWithLabel from './inputs/CustomInputWithLabel';
 import CustomRadioButton from './inputs/CustomRadioButton';
 
 const CreateAnimalForm = () => {
@@ -36,40 +37,9 @@ const CreateAnimalForm = () => {
   return (
         <form className='d-flex flex-column mb-2' onChange={(e) => handleChange(e)} onSubmit={(e) => handleSubmit(e)}>
             <div>
-                <div className="form-group py-2">
-                    <label htmlFor='name'>Name</label>
-                    <input
-                        type="text"
-                        required
-                        className="form-control"
-                        name='name'
-                        id="name"
-                        placeholder="Name"
-                    />
-                </div>
-                <div className="form-group py-2">
-                    <label htmlFor='description'>Description</label>
-                    <input
-                        type="text"
-                        required
-                        className="form-control"
-                        name='description'
-                        id="Description"
-                        placeholder="Description"
-                    />
-                </div>
-                <div className="form-group py-2">
-                    <label htmlFor='age'>Age</label>
-                    <input
-                        type="number"
-                        required
-                        min={1}
-                        className="form-control"
-                        name='age'
-                        id="age"
-                        placeholder="Age"
-                     />
-                </div>
+                <CustomInputWithLabel label='Name' name='name'/>
+                <CustomInputWithLabel label='Description' name='description'/>
+                <CustomInputWithLabel label='Age' name='age' type='number'/>
                 <div className="form-group d-flex flex-column py-2">
                     <label htmlFor='category'>Category</label>
                     <CustomRadioButton name='category' buttonData={animalCategories}/>

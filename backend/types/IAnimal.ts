@@ -3,10 +3,10 @@ export interface IAnimal {
   name: string;
   age: number;
   description: string;
-  category: AnimalCategories;
+  category: AnimalCategoriesType;
   imageURL: string;
   isAdopted: boolean;
   userId: string;
 }
 
-export type AnimalCategories = 'DOG' | 'CAT';
+export type AnimalCategoriesType = 'DOG' | 'CAT';
