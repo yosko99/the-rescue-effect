@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 
 import { useMutation } from '@apollo/client';
-import { Alert, Image } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-import logoIMG from '../assets/logo.jpg';
 import CustomInputWithLabel from '../components/inputs/CustomInputWithLabel';
 import CustomRadioButton from '../components/inputs/CustomRadioButton';
+import CustomSpinner from '../components/utils/CustomSpinner';
+import MainLogo from '../components/utils/MainLogo';
 import animalCategories from '../constants/animalCategories';
 import genders from '../constants/genders';
 import { CREATE_USER_MUTATION, ICreateUserResponse } from '../mutations/user.mutations';
-import { CreateUserType } from '../types/user.type';
+import { ICreateUser } from '../types/user.type';
 
 const RegisterPage = () => {
-  const [userData, setUserData] = useState<CreateUserType>({
+  const [userData, setUserData] = useState<ICreateUser>({
     animalPreferences: 'DOG',
     email: '',
     gender: 'MALE',
@@ -24,7 +25,7 @@ const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const [createUser] = useMutation(CREATE_USER_MUTATION);
+  const [createUser, { loading }] = useMutation(CREATE_USER_MUTATION);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as HTMLInputElement;
@@ -32,7 +33,7 @@ const RegisterPage = () => {
     setUserData(() => {
       return {
         ...userData,
-        [target.name as keyof CreateUserType]: target.value
+        [target.name as keyof ICreateUser]: target.value
       };
     });
   };
@@ -63,11 +64,9 @@ const RegisterPage = () => {
 
   return (
     <div className='container d-flex justify-content-center align-items-center' style={{ height: '90vh' }}>
-        <div className='shadow-lg p-4'>
+        <div className='shadow-lg p-5 pb-0'>
 
-            <div className='d-flex justify-content-center align-items-center'>
-                <Image src={logoIMG} width={250} height={250} alt='The Rescue Effect' />
-            </div>
+            <MainLogo />
 
             <p className='fs-2 text-center mt-0'>Register now and adopt your new companion</p>
 
@@ -86,12 +85,16 @@ const RegisterPage = () => {
                     </div>
                 </div>
 
-                {responseAlert}
+                {loading ? <CustomSpinner /> : responseAlert}
 
                 <div className='pb-2'>
                     <button type="submit" className="w-100 btn btn-info">Submit</button>
                 </div>
             </form>
+
+            <p className='text-center py-2' role='button' onClick={() => navigate('/login')}>
+              Already have an account?
+            </p>
         </div>
     </div>
   );

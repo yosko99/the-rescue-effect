@@ -15,3 +15,19 @@ export interface ICreateUserResponse {
     token: string;
   };
 }
+
+export const LOGIN_MUTATION = gql`
+  mutation Login($input: LoginInput!) {
+    login(input: $input) {
+      message
+      token
+    }
+  }
+`;
+
+export interface ILoginResponse {
+  login: {
+    message: string;
+    token: string;
+  };
+}
