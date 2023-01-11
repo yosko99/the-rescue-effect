@@ -1,4 +1,4 @@
-interface IRandomUserResponse {
+interface IRandomUserAPI {
   results: [
     {
       picture: {
@@ -10,4 +10,4 @@ interface IRandomUserResponse {
   ];
 }
 
-export default IRandomUserResponse;
+export default IRandomUserAPI;

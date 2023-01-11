@@ -1,12 +1,12 @@
-interface IAnimal {
+export interface IAnimal {
   id?: string;
   name: string;
   age: number;
   description: string;
-  category: 'DOG' | 'CAT';
+  category: AnimalCategories;
   imageURL: string;
   isAdopted: boolean;
   userId: string;
 }
 
-export default IAnimal;
+export type AnimalCategories = 'DOG' | 'CAT';

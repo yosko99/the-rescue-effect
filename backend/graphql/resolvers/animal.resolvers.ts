@@ -1,8 +1,8 @@
 import { PrismaClient } from '@prisma/client';
-import axios from 'axios';
 
-import IAnimal from '../../types/IAnimal';
-import IDogResponse from '../../types/IDogResponse';
+import getAnimalPicture from '../functions/animal/getAnimalPicture';
+
+import { IAnimal } from '../../types/IAnimal';
 
 const prisma = new PrismaClient();
 
@@ -28,9 +28,6 @@ module.exports = {
 
   Mutation: {
     createAnimal: async (_prev: unknown, { input }: { input: IAnimal }) => {
-      const dogAPI = await axios.get('https://dog.ceo/api/breeds/image/random');
-      const dogData: IDogResponse = dogAPI.data;
-
       const { age, name, description, category } = input;
 
       const animal = await prisma.animal.create({
@@ -39,7 +36,7 @@ module.exports = {
           name,
           description,
           category,
-          imageURL: dogData.message,
+          imageURL: await getAnimalPicture(category),
         },
       });
 

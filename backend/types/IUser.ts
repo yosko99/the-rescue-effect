@@ -1,4 +1,4 @@
-import IAnimal from './IAnimal';
+import { IAnimal } from './IAnimal';
 
 interface IUser {
   id: string;

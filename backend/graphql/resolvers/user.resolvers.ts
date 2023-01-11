@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import * as bcryptjs from 'bcryptjs';
 import axios from 'axios';
 
-import IRandomUserResponse from '../../types/IRandomUserResponse';
+import IRandomUserAPI from '../../types/api/IRandomUserAPI';
 import IUser from '../../types/IUser';
 
 import checkExistingUserByEmail from '../functions/user/checkExistingUserByEmail';
@@ -37,7 +37,7 @@ module.exports = {
   Mutation: {
     createUser: async (_prev: unknown, { input }: { input: IUser }) => {
       const dogAPI = await axios.get('https://randomuser.me/api/');
-      const dogData: IRandomUserResponse = dogAPI.data;
+      const dogData: IRandomUserAPI = dogAPI.data;
 
       const { animalPreferences, email, gender, name, password } = input;
 
