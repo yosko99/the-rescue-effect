@@ -22,10 +22,12 @@ module.exports = `#graphql
         updateAnimal(input: UpdateAnimalInput!): Animal
         deleteAnimal(id: String!): SuccessfullRequest
     }
+
     type Animal {
         id: String!
         name: String!
         age: Int!
+        isAdopted: Boolean!
         description: String!
         category: AnimalTypes!
         imageURL: String!

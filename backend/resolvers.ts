@@ -1,4 +1,3 @@
-import { PrismaClient } from '@prisma/client';
 const { mergeResolvers } = require('@graphql-tools/merge');
 
 const animalResolvers = require('./graphql/resolvers/animal.resolvers');
