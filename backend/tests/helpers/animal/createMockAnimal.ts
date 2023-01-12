@@ -1,5 +1,6 @@
-import { gql } from 'apollo-server-express';
 import request from 'supertest-graphql';
+
+import { CREATE_ANIMAL_MUTATION } from '../../../graphql/mutations/animal.mutations';
 
 import server from '../../../server';
 
@@ -7,20 +8,7 @@ import { IAnimal } from '../../../types/IAnimal';
 
 const createMockAnimal = async () => {
   const { data } = await request(server)
-    .mutate(
-      gql`
-        mutation CreateAnimal($input: CreateAnimalInput!) {
-          createAnimal(input: $input) {
-            id
-            name
-            age
-            description
-            category
-            imageURL
-          }
-        }
-      `
-    )
+    .mutate(CREATE_ANIMAL_MUTATION)
     .variables({
       input: {
         age: 1,

@@ -10,3 +10,11 @@ export interface IAnimal {
 }
 
 export type AnimalCategoriesType = 'DOG' | 'CAT';
+
+export interface IUpdateAnimal {
+  id: string;
+  name?: string;
+  age?: number;
+  description?: string;
+  category?: AnimalCategoriesType;
+}
