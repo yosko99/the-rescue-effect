@@ -84,7 +84,7 @@ module.exports = {
             name,
           },
         })
-        .catch((_err) => {
+        .catch((_err: Error) => {
           throw new Error(`User with id ${id} not found.`);
         });
 

@@ -49,7 +49,7 @@ module.exports = {
           where: { id },
           data: { age, name, description, category },
         })
-        .catch((_err) => {
+        .catch((_err: Error) => {
           throw new Error(`Animal with id ${id} not found.`);
         });
 

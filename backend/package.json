@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --detectOpenHandles --verbose",
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --verbose --forceExit",
     "test:watch": "jest --verbose --watch",
     "build": "npx tsc",
     "start": "node dist/server.js",
@@ -36,6 +36,7 @@
     "@types/jest": "^29.2.5",
     "@types/jsonwebtoken": "^9.0.0",
     "@types/node": "^18.11.18",
+    "cross-env": "^7.0.3",
     "eslint": "^8.29.0",
     "eslint-config-standard": "^17.0.0",
     "eslint-plugin-import": "^2.26.0",
