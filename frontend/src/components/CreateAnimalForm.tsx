@@ -5,12 +5,12 @@ import { useMutation } from '@apollo/client';
 import animalCategories from '../constants/animalCategories';
 import { CREATE_ANIMAL_MUTATION } from '../mutations/animal.mutations';
 import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../queries/animal.queries';
-import { CreateAnimalType } from '../types/animal.type';
+import { ICreateAnimal } from '../types/animal.type';
 import CustomInputWithLabel from './inputs/CustomInputWithLabel';
 import CustomRadioButton from './inputs/CustomRadioButton';
 
 const CreateAnimalForm = () => {
-  const [animalData, setAnimalData] = useState<CreateAnimalType>({
+  const [animalData, setAnimalData] = useState<ICreateAnimal>({
     category: 'DOG',
     description: '',
     age: 1,
@@ -24,7 +24,7 @@ const CreateAnimalForm = () => {
     setAnimalData(() => {
       return {
         ...animalData,
-        [target.name as keyof CreateAnimalType]: target.name === 'age' ? Number(target.value) : target.value
+        [target.name as keyof ICreateAnimal]: target.name === 'age' ? Number(target.value) : target.value
       };
     });
   };

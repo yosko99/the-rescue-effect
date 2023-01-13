@@ -6,7 +6,7 @@ import { Col, Row } from 'react-bootstrap';
 import AnimalCard from '../components/AnimalCard';
 import CreateAnimalForm from '../components/CreateAnimalForm';
 import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../queries/animal.queries';
-import { AnimalType } from '../types/animal.type';
+import { IAnimal } from '../types/animal.type';
 
 const MainPage = () => {
   const { data, loading } = useQuery(GET_ANIMALS_FOR_ADOPTION_QUERY);
@@ -22,7 +22,7 @@ const MainPage = () => {
         {data.getAnimalsForAdoption === undefined || data.getAnimalsForAdoption.length === 0
           ? <p className='fs-3 text-center'>No data</p>
           : <Row>
-          {data.getAnimalsForAdoption.map((animal: AnimalType, index: number) => (
+          {data.getAnimalsForAdoption.map((animal: IAnimal, index: number) => (
             <Col lg={3} md={6} sm={12} className='my-2' key={index}>
               <AnimalCard animal={animal} />
             </Col>

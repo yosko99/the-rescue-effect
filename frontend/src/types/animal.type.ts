@@ -1,6 +1,6 @@
 export type AnimalCategoriesType = 'DOG' | 'CAT';
 
-export interface AnimalType {
+export interface IAnimal {
   id: String;
   name: string;
   age: Number;
@@ -9,7 +9,7 @@ export interface AnimalType {
   imageURL: string;
 }
 
-export interface CreateAnimalType {
+export interface ICreateAnimal {
   name: string;
   age: number;
   description: string;

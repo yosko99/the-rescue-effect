@@ -1,34 +1,16 @@
 import * as React from 'react';
 
-import { useMutation } from '@apollo/client';
 import { Button, Card } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 
-import { ADOPT_ANIMAL_MUTATION } from '../mutations/user.mutations';
-import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../queries/animal.queries';
-import { AnimalType } from '../types/animal.type';
+import { IAnimal } from '../types/animal.type';
+import AdoptModal from './AdoptModal';
 
 interface Props {
-  animal: AnimalType;
+  animal: IAnimal;
 }
 
 const AnimalCard:React.FC<Props> = ({ animal }) => {
-  const [adoptAnimal] = useMutation(
-    ADOPT_ANIMAL_MUTATION,
-    { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
-  );
-
-  const navigate = useNavigate();
-
-  const handleAdopt = () => {
-    const token = localStorage.getItem('token');
-
-    if (token === null) {
-      navigate('/register');
-    } else {
-      adoptAnimal({ variables: { animalID: animal.id }, refetchQueries: [GET_ANIMALS_FOR_ADOPTION_QUERY] });
-    }
-  };
+  const [modalShow, setModalShow] = React.useState(false);
 
   return (
     <Card className='text-black'>
@@ -42,7 +24,8 @@ const AnimalCard:React.FC<Props> = ({ animal }) => {
       <Card.Body>
         <Card.Title>{`${animal.name} (${animal.age} ${animal.age === 1 ? 'year' : 'years'}) `}</Card.Title>
         <Card.Text className='fs-5'>{animal.description}</Card.Text>
-        <Button variant='info' onClick={handleAdopt}>Adopt</Button>
+        <Button variant='info' onClick={() => setModalShow(true)}>Adopt</Button>
+        <AdoptModal animal={animal} onHide={() => setModalShow(false)} show={modalShow}/>
       </Card.Body>
     </Card>
   );
