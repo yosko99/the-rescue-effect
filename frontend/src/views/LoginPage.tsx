@@ -5,7 +5,7 @@ import { Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
 import CustomInputWithLabel from '../components/inputs/CustomInputWithLabel';
-import CustomSpinner from '../components/utils/CustomSpinner';
+import CustomSpinner from '../components/utils/custom/CustomSpinner';
 import MainLogo from '../components/utils/MainLogo';
 import { ILoginResponse, LOGIN_MUTATION } from '../mutations/user.mutations';
 import { ILoginUser } from '../types/user.type';

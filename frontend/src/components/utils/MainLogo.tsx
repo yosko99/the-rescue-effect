@@ -5,7 +5,13 @@ import { useNavigate } from 'react-router-dom';
 
 import logoIMG from '../../assets/logo.jpg';
 
-const MainLogo = () => {
+interface Props {
+  width?: number;
+  height?: number;
+  rounded?: boolean;
+}
+
+const MainLogo:React.FC<Props> = ({ width, height, rounded }) => {
   const navigate = useNavigate();
 
   return (
@@ -13,8 +19,10 @@ const MainLogo = () => {
         <Image
             onClick={() => navigate('/')}
             src={logoIMG}
-            width={250}
-            height={250}
+            fluid
+            roundedCircle={rounded}
+            width={width !== undefined ? width : 200}
+            height={height !== undefined ? height : 200}
             alt='The Rescue Effect'
             role='button'
         />

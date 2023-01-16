@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import CustomInputWithLabel from '../components/inputs/CustomInputWithLabel';
 import CustomRadioButton from '../components/inputs/CustomRadioButton';
-import CustomSpinner from '../components/utils/CustomSpinner';
+import CustomSpinner from '../components/utils/custom/CustomSpinner';
 import MainLogo from '../components/utils/MainLogo';
 import animalCategories from '../constants/animalCategories';
 import genders from '../constants/genders';

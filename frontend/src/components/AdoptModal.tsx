@@ -25,6 +25,8 @@ const AdoptModal:React.FC<Props> = ({ onHide, show, animal }) => {
     if (localStorage.getItem('token') !== null) {
       adoptAnimal({ variables: { animalID: animal.id }, refetchQueries: [GET_ANIMALS_FOR_ADOPTION_QUERY] });
       onHide();
+    } else {
+      onHide();
     }
   };
 
