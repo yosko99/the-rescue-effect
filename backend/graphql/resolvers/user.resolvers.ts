@@ -35,6 +35,12 @@ module.exports = {
 
       return user;
     },
+
+    getCurrentUser: async (_prev: unknown, input: unknown, ctx: IContext) => {
+      const user = await authorizeFromToken(ctx);
+
+      return user;
+    },
   },
 
   Mutation: {

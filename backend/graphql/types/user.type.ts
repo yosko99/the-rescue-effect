@@ -51,6 +51,7 @@ module.exports = `#graphql
     type Query {
         users: [User]!
         getUser(id: String!): User
+        getCurrentUser: User
     }
 
     enum Genders {

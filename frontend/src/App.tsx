@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import LoginPage from './views/LoginPage';
 import MainPage from './views/MainPage';
+import ProfilePage from './views/ProfilePage';
 import RegisterPage from './views/RegisterPage';
 
 function App () {
@@ -21,6 +22,7 @@ function App () {
           <Route path='/' element={<MainPage />} />
           <Route path='/register' element={<RegisterPage />} />
           <Route path='/login' element={<LoginPage />} />
+          <Route path='/profile' element={<ProfilePage />} />
         </Routes>
       </ApolloProvider>
     </Router>

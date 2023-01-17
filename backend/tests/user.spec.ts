@@ -15,6 +15,7 @@ import IGraphQLError from '../types/IGraphQLError';
 import IUser from '../types/IUser';
 
 import {
+  GET_CURRENT_USER_QUERY,
   GET_USERS_QUERY,
   GET_USER_QUERY,
 } from '../graphql/queries/user.queries';
@@ -79,6 +80,33 @@ describe('Testing user routes', () => {
         expect(responseErrors[0].message).toEqual(
           'User with provided id does not exist'
         );
+      });
+    });
+
+    describe('test QUERY getCurrentUser', () => {
+      test('get current user with provided valid token', async () => {
+        const mockUser = await createMockUser();
+
+        await request(server)
+          .query(GET_CURRENT_USER_QUERY)
+          .set('Authorization', `Bearer ${mockUser.token}`)
+          .expectNoErrors();
+
+        await deleteMockUser(mockUser.user.id);
+      });
+
+      test('get current user without providing token', async () => {
+        const { errors } = await request(server).query(GET_CURRENT_USER_QUERY);
+
+        expect(errors![0].message).toEqual('Token not provided.');
+      });
+
+      test('get current user with provided invalid token', async () => {
+        const { errors } = await request(server)
+          .query(GET_CURRENT_USER_QUERY)
+          .set('Authorization', `Bearer TEST`);
+
+        expect(errors![0].message).toEqual('Provided invalid token.');
       });
     });
   });
