@@ -12,7 +12,7 @@ import checkExistingAnimalByID from '../functions/animal/checkExistingAnimalByID
 
 import generateToken from '../../functions/generateToken';
 import IContext from '../../types/IContext';
-import getTokenData from '../functions/user/getTokenData';
+import authorizeFromToken from '../functions/user/authorizeFromToken';
 
 const prisma = new PrismaClient();
 
@@ -131,7 +131,7 @@ module.exports = {
     ) => {
       const animal = await checkExistingAnimalByID(animalID);
 
-      const { email } = getTokenData(ctx);
+      const { email } = await authorizeFromToken(ctx);
 
       await prisma.animal.update({
         where: { id: animalID },

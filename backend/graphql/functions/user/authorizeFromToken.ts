@@ -1,12 +1,16 @@
-import IContext from '../../../types/IContext';
+import { PrismaClient } from '@prisma/client';
 import * as jwt from 'jsonwebtoken';
+
+import IContext from '../../../types/IContext';
+
+const prisma = new PrismaClient();
 
 interface IExtractedTokenData {
   email: string;
   password: string;
 }
 
-const getTokenData = (ctx: IContext) => {
+const authorizeFromToken = async (ctx: IContext) => {
   if (ctx.req.headers.authorization === undefined) {
     throw new Error('Token not provided.');
   }
@@ -19,10 +23,18 @@ const getTokenData = (ctx: IContext) => {
       process.env.JSONWEBTOKEN_KEY as string
     ) as IExtractedTokenData;
 
-    return decoded;
+    const user = await prisma.user.findUnique({
+      where: { email: decoded.email },
+    });
+
+    if (user === null) {
+      throw new Error('User with provided credentials in token do not exist.');
+    }
+
+    return user;
   } catch (err) {
     throw new Error('Provided invalid token.');
   }
 };
 
-export default getTokenData;
+export default authorizeFromToken;

@@ -13,7 +13,10 @@ import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../queries/animal.queries';
 import { IAnimal } from '../types/animal.type';
 
 const MainPage = () => {
-  const { data, loading } = useQuery(GET_ANIMALS_FOR_ADOPTION_QUERY);
+  const { data, loading } = useQuery(
+    GET_ANIMALS_FOR_ADOPTION_QUERY,
+    { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
+  );
 
   if (loading) {
     return <div className='App-header'>Loading</div>;

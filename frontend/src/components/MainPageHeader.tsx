@@ -19,10 +19,10 @@ const MainPageHeader = () => {
         <p className='fs-1 font-weight-bold my-2'>Find your new best friend</p>
         <Row>
           <Col className='d-flex justify-content-center align-items-center my-2'>
-            <Image role={'button'} src={catsButtonIMG}/>
+            <Image role={'button'} src={dogsButtonIMG}/>
           </Col>
           <Col className='d-flex justify-content-center align-items-center my-2'>
-            <Image role={'button'} src={dogsButtonIMG}/>
+            <Image role={'button'} src={catsButtonIMG}/>
           </Col>
         </Row>
     </div>

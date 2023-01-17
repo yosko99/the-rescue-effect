@@ -4,6 +4,8 @@ import getAnimalPicture from '../functions/animal/getAnimalPicture';
 
 import { IAnimal } from '../../types/IAnimal';
 import checkExistingAnimalByID from '../functions/animal/checkExistingAnimalByID';
+import IContext from '../../types/IContext';
+import getUserFromToken from '../functions/utils/getUserFromToken';
 
 const prisma = new PrismaClient();
 
@@ -19,8 +21,24 @@ module.exports = {
       return animal;
     },
 
-    getAnimalsForAdoption: async () => {
-      return await prisma.animal.findMany({ where: { isAdopted: false } });
+    getAnimalsForAdoption: async (
+      _prev: unknown,
+      _input: unknown,
+      ctx: IContext
+    ) => {
+      const user = await getUserFromToken(ctx);
+
+      if (user === null) {
+        return await prisma.animal.findMany({ where: { isAdopted: false } });
+      }
+
+      const orderByAnimalCategory =
+        user.animalPreferences === 'CAT' ? 'asc' : 'desc';
+
+      return await prisma.animal.findMany({
+        where: { isAdopted: false },
+        orderBy: { category: orderByAnimalCategory },
+      });
     },
   },
 
