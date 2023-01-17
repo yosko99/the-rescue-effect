@@ -21,25 +21,6 @@ services:
     networks:
       - app-network
 
-  server:
-    build:
-      context: ./backend
-    ports:
-      - 5000:5000
-    networks:
-      - app-network
-    volumes:
-      - ./source_dir:/app/server
-    depends_on:
-      - db
-    command: npm run start
-    restart: on-failure
-    tty: true
-    environment:
-      - PORT=5000
-      - DATABASE_URL=postgresql://postgres:example@db:5432/testing
-      - JSONWEBTOKEN_KEY=test1234
-
 networks:
   app-network:
     driver: bridge

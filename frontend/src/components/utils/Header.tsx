@@ -18,9 +18,9 @@ const Header = () => {
         <p
             className='m-0 p-3 text-black'
             role={'button'}
-            onClick={() => navigate('/favorites')}
+            onClick={() => navigate('/profile')}
             >
-            Favorites
+            Profile
         </p>
       </Container>
     </div>
