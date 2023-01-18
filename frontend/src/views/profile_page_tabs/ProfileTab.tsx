@@ -3,6 +3,7 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Col, Image, Row } from 'react-bootstrap';
 
+import ProfileTabsTemplate from '../../components/profile_page/ProfileTabsTemplate';
 import Loading from '../../components/utils/Loading';
 import { GET_CURRENT_USER_QUERY } from '../../queries/user.queries';
 import { IUser } from '../../types/user.type';
@@ -20,7 +21,7 @@ const ProfileTab = () => {
   const { getCurrentUser: user } = data as { getCurrentUser: IUser};
 
   return (
-    <div>
+    <ProfileTabsTemplate>
         <p className='text-center fs-1'>My Profile</p>
         <Row className='p-5'>
             <Col lg={4} className='d-flex justify-content-center align-items-center align-items-lg-start flex-column'>
@@ -42,7 +43,7 @@ const ProfileTab = () => {
                 <p className='fs-5'>{user.email}</p>
             </Col>
         </Row>
-    </div>
+    </ProfileTabsTemplate>
   );
 };
 

@@ -25,6 +25,7 @@ const authorizeFromToken = async (ctx: IContext) => {
 
     const user = await prisma.user.findUnique({
       where: { email: decoded.email },
+      include: { animals: true },
     });
 
     if (user === null) {

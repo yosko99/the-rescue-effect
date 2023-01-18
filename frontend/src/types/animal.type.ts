@@ -7,6 +7,7 @@ export interface IAnimal {
   description: string;
   category: AnimalCategoriesType;
   imageURL: string;
+  isAdopted: boolean;
 }
 
 export interface ICreateAnimal {

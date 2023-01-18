@@ -24,7 +24,10 @@ const AnimalCard:React.FC<Props> = ({ animal }) => {
       <Card.Body>
         <Card.Title>{`${animal.name} (${animal.age} ${animal.age === 1 ? 'year' : 'years'}) `}</Card.Title>
         <Card.Text className='fs-5'>{animal.description}</Card.Text>
-        <Button variant='dark' onClick={() => setModalShow(true)}>Adopt</Button>
+        {animal.isAdopted
+          ? <></>
+          : <Button variant='dark' onClick={() => setModalShow(true)}>Adopt</Button>
+        }
         <AdoptModal animal={animal} onHide={() => setModalShow(false)} show={modalShow}/>
       </Card.Body>
     </Card>
