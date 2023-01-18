@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import { useMutation } from '@apollo/client';
 
-import animalCategories from '../constants/animalCategories';
-import { CREATE_ANIMAL_MUTATION } from '../mutations/animal.mutations';
-import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../queries/animal.queries';
-import { ICreateAnimal } from '../types/animal.type';
-import CustomInputWithLabel from './inputs/CustomInputWithLabel';
-import CustomRadioButton from './inputs/CustomRadioButton';
+import animalCategories from '../../constants/animalCategories';
+import { CREATE_ANIMAL_MUTATION } from '../../mutations/animal.mutations';
+import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../../queries/animal.queries';
+import { ICreateAnimal } from '../../types/animal.type';
+import CustomInputWithLabel from '../inputs/CustomInputWithLabel';
+import CustomRadioButton from '../inputs/CustomRadioButton';
 
 const CreateAnimalForm = () => {
   const [animalData, setAnimalData] = useState<ICreateAnimal>({
@@ -35,7 +35,7 @@ const CreateAnimalForm = () => {
   };
 
   return (
-        <form className='d-flex flex-column mb-2' onChange={(e) => handleChange(e)} onSubmit={(e) => handleSubmit(e)}>
+        <form className='d-flex flex-column mb-2 px-5 pb-4' onChange={(e) => handleChange(e)} onSubmit={(e) => handleSubmit(e)}>
             <div>
                 <CustomInputWithLabel label='Name' name='name'/>
                 <CustomInputWithLabel label='Description' name='description'/>

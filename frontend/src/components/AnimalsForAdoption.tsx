@@ -23,7 +23,7 @@ const AnimalsForAdoption = () => {
         <Image width={250} height={250} roundedCircle src={happyDogIMG} alt='happy dog'/>
         <p className='fs-4 mt-4'>All our animals found their homes. Currently we do not have animals for adoption.</p>
       </div>
-    : <Row className='d-flex justify-content-center align-items-center'>
+    : <Row className='d-flex justify-content-center'>
       {data.getAnimalsForAdoption.map((animal: IAnimal, index: number) => (
         <Col lg={3} md={6} sm={12} className='my-2' key={index}>
           <AnimalCard animal={animal} />

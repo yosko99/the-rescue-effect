@@ -1,4 +1,4 @@
-import { AnimalCategoriesType } from './animal.type';
+import { AnimalCategoriesType, IAnimal } from './animal.type';
 
 export type GendersType = 'MALE' | 'FEMALE';
 
@@ -12,5 +12,16 @@ export interface ICreateUser {
 
 export interface ILoginUser {
   email: string;
+  password: string;
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  email: string;
+  gender: GendersType;
+  animals: IAnimal[];
+  animalPreferences: AnimalCategoriesType;
+  imageURL: string;
   password: string;
 }
