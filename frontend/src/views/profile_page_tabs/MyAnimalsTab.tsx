@@ -8,16 +8,22 @@ import sadDogIMG from '../../assets/sad-dog.jpeg';
 import AnimalCard from '../../components/AnimalCard';
 import ProfileTabsTemplate from '../../components/profile_page/ProfileTabsTemplate';
 import Loading from '../../components/utils/Loading';
+import useAuth from '../../hooks/useAuth';
+import useErrorHandle from '../../hooks/useErrorHandle';
 import { GET_CURRENT_USER_QUERY } from '../../queries/user.queries';
 import { IUser } from '../../types/user.type';
 
 const MyAnimalsTab = () => {
-  const { data, loading } = useQuery(
+  useAuth();
+
+  const { data, loading, error } = useQuery(
     GET_CURRENT_USER_QUERY,
     { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
   );
 
   const navigate = useNavigate();
+
+  useErrorHandle(error);
 
   if (loading) {
     return <Loading height='50vh'/>;
@@ -26,7 +32,7 @@ const MyAnimalsTab = () => {
   const { getCurrentUser: user } = data as { getCurrentUser: IUser};
 
   return (
-    <ProfileTabsTemplate>
+    <ProfileTabsTemplate showTabs>
       <p className='text-center fs-1'>My animals</p>
         {user.animals.length === 0
           ? <div className='d-flex justify-content-center align-items-center flex-column p-5 pt-2 text-center'>

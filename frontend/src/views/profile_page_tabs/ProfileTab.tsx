@@ -5,14 +5,20 @@ import { Col, Image, Row } from 'react-bootstrap';
 
 import ProfileTabsTemplate from '../../components/profile_page/ProfileTabsTemplate';
 import Loading from '../../components/utils/Loading';
+import useAuth from '../../hooks/useAuth';
+import useErrorHandle from '../../hooks/useErrorHandle';
 import { GET_CURRENT_USER_QUERY } from '../../queries/user.queries';
 import { IUser } from '../../types/user.type';
 
 const ProfileTab = () => {
-  const { data, loading } = useQuery(
+  useAuth();
+
+  const { data, loading, error } = useQuery(
     GET_CURRENT_USER_QUERY,
     { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
   );
+
+  useErrorHandle(error);
 
   if (loading) {
     return <Loading height='50vh'/>;
@@ -21,7 +27,7 @@ const ProfileTab = () => {
   const { getCurrentUser: user } = data as { getCurrentUser: IUser};
 
   return (
-    <ProfileTabsTemplate>
+    <ProfileTabsTemplate showTabs>
         <p className='text-center fs-1'>My Profile</p>
         <Row className='p-5'>
             <Col lg={4} className='d-flex justify-content-center align-items-center align-items-lg-start flex-column'>
