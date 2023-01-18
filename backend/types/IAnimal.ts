@@ -7,6 +7,8 @@ export interface IAnimal {
   imageURL: string;
   isAdopted: boolean;
   userId: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export type AnimalCategoriesType = 'DOG' | 'CAT';

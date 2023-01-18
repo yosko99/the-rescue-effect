@@ -2,6 +2,8 @@ module.exports = `#graphql
     union AnimalResult = Animal | NotFoundError
     union DeleteAnimalResult =  SuccessfullRequest | NotFoundError
 
+    scalar Date
+
     input CreateAnimalInput {
         name: String!
         age: Int!
@@ -31,7 +33,10 @@ module.exports = `#graphql
         description: String!
         category: AnimalTypes!
         imageURL: String!
+        createdAt: Date!
+        updatedAt: Date!
     }
+    
     type Query {
         animals: [Animal]
         getAnimalsForAdoption: [Animal]

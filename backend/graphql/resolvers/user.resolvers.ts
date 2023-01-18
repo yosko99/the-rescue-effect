@@ -141,7 +141,11 @@ module.exports = {
 
       await prisma.animal.update({
         where: { id: animalID },
-        data: { User: { connect: { email } }, isAdopted: true },
+        data: {
+          User: { connect: { email } },
+          isAdopted: true,
+          updatedAt: new Date(),
+        },
       });
 
       return {

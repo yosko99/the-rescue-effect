@@ -17,6 +17,8 @@ model Animal {
   isAdopted   Boolean     @default(false)
   User        User?       @relation(fields: [userEmail], references: [email], onDelete: Cascade)
   userEmail   String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now()) @updatedAt
 }
 
 model User {

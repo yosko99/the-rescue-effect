@@ -65,7 +65,7 @@ module.exports = {
       const updatedAnimal = await prisma.animal
         .update({
           where: { id },
-          data: { age, name, description, category },
+          data: { age, name, description, category, updatedAt: new Date() },
         })
         .catch((_err: Error) => {
           throw new Error(`Animal with id ${id} not found.`);

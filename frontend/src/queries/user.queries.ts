@@ -17,6 +17,7 @@ export const GET_CURRENT_USER_QUERY = gql`
         description
         category
         imageURL
+        updatedAt
       }
     }
   }

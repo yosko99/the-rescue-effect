@@ -9,6 +9,7 @@ export const GET_ANIMALS_QUERY = gql`
       description
       category
       imageURL
+      createdAt
     }
   }
 `;
@@ -22,6 +23,7 @@ export const GET_ANIMALS_FOR_ADOPTION_QUERY = gql`
       description
       category
       imageURL
+      createdAt
     }
   }
 `;

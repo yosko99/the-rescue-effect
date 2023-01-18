@@ -8,6 +8,8 @@ export interface IAnimal {
   category: AnimalCategoriesType;
   imageURL: string;
   isAdopted: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ICreateAnimal {
