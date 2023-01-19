@@ -152,5 +152,30 @@ module.exports = {
         message: `Congratulations you adopted ${animal.name}`,
       };
     },
+
+    updateCurrentUser: async (
+      _prev: unknown,
+      { input }: { input: IUser },
+      ctx: IContext
+    ) => {
+      const { animalPreferences, gender, name } = input;
+
+      const { id } = await authorizeFromToken(ctx);
+
+      const updatedUser = await prisma.user
+        .update({
+          where: { id },
+          data: {
+            animalPreferences,
+            gender,
+            name,
+          },
+        })
+        .catch((_err: Error) => {
+          throw new Error(`User with id ${id} not found.`);
+        });
+
+      return updatedUser;
+    },
   },
 };

@@ -23,6 +23,7 @@ import {
   ADOPT_ANIMAL_MUTATION,
   CREATE_USER_MUTATION,
   LOGIN_MUTATION,
+  UPDATE_CURRENT_USER_MUTATION,
 } from '../graphql/mutations/user.mutations';
 
 describe('Testing user routes', () => {
@@ -170,6 +171,45 @@ describe('Testing user routes', () => {
 
         expect(Array.isArray(errors)).toEqual(true);
         await deleteMockUser(mockUser.user.id!);
+      });
+    });
+
+    describe('test MUTATION updateCurrentUser', () => {
+      test('update current user with provided valid token and valid data', async () => {
+        const mockUser = await createMockUser();
+
+        await request(server)
+          .mutate(UPDATE_CURRENT_USER_MUTATION)
+          .variables({ input: { name: 'new name' } })
+          .set('Authorization', `Bearer ${mockUser.token}`)
+          .expectNoErrors();
+
+        await deleteMockUser(mockUser.user.id!);
+      });
+
+      test('update current user with provided invalid token', async () => {
+        const { errors } = await request(server)
+          .mutate(UPDATE_CURRENT_USER_MUTATION)
+          .variables({ input: {} })
+          .set('Authorization', `Bearer test`);
+
+        expect(errors![0].message).toEqual('Provided invalid token.');
+      });
+
+      test('update current user without providing token', async () => {
+        const { errors } = await request(server)
+          .mutate(UPDATE_CURRENT_USER_MUTATION)
+          .variables({ input: {} });
+
+        expect(errors![0].message).toEqual('Token not provided.');
+      });
+
+      test('update current user without providing input variable', async () => {
+        const { errors } = await request(server).mutate(
+          UPDATE_CURRENT_USER_MUTATION
+        );
+
+        expect(Array.isArray(errors)).toEqual(true);
       });
     });
 

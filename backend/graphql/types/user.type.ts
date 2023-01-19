@@ -25,6 +25,12 @@ module.exports = `#graphql
         animalPreferences: AnimalTypes
     }
 
+    input UpdateCurrentUserInput {
+        name: String
+        gender: Genders
+        animalPreferences: AnimalTypes
+    }
+
     input LoginInput {
         email: String!
         password: String!
@@ -33,6 +39,7 @@ module.exports = `#graphql
     type Mutation {
         createUser(input: CreateUserInput!): CreateUserResponse
         updateUser(input: UpdateUserInput!): User
+        updateCurrentUser(input: UpdateCurrentUserInput!): User
         deleteUser(id: String!): SuccessfullRequest
         login(input: LoginInput!): LoginResponse
         adoptAnimal(animalID: String!): SuccessfullRequest

@@ -72,3 +72,16 @@ export const ADOPT_ANIMAL_MUTATION = gql`
     }
   }
 `;
+
+export const UPDATE_CURRENT_USER_MUTATION = gql`
+  mutation UpdateCurrentUser($input: UpdateCurrentUserInput!) {
+    updateCurrentUser(input: $input) {
+      id
+      name
+      email
+      gender
+      animalPreferences
+      imageURL
+    }
+  }
+`;

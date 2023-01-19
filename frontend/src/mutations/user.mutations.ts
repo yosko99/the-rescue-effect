@@ -45,3 +45,16 @@ export interface IAdoptAnimalResponse {
     message: string;
   };
 }
+
+export const UPDATE_CURRENT_USER_MUTATION = gql`
+  mutation UpdateCurrentUser($input: UpdateCurrentUserInput!) {
+    updateCurrentUser(input: $input) {
+      id
+      name
+      email
+      gender
+      animalPreferences
+      imageURL
+    }
+  }
+`;
