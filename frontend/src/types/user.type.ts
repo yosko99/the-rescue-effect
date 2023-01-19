@@ -25,3 +25,9 @@ export interface IUser {
   imageURL: string;
   password: string;
 }
+
+export interface IUpdateCurrentUser {
+  name: string;
+  animalPreferences: AnimalCategoriesType;
+  gender: GendersType;
+}

@@ -1,6 +1,6 @@
-const animalCategories = [
+const ANIMAL_CATEGORIES = [
   { value: 'DOG', label: 'Dog' },
   { value: 'CAT', label: 'Cat' }
 ];
 
-export default animalCategories;
+export default ANIMAL_CATEGORIES;

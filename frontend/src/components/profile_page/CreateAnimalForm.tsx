@@ -3,12 +3,11 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Alert } from 'react-bootstrap';
 
-import animalCategories from '../../constants/animalCategories';
 import { CREATE_ANIMAL_MUTATION } from '../../mutations/animal.mutations';
 import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../../queries/animal.queries';
 import { ICreateAnimal } from '../../types/animal.type';
+import AnimalCategoryInput from '../inputs/AnimalCategoryInput';
 import CustomInputWithLabel from '../inputs/CustomInputWithLabel';
-import CustomRadioButton from '../inputs/CustomRadioButton';
 
 const CreateAnimalForm = () => {
   const [animalData, setAnimalData] = useState<ICreateAnimal>({
@@ -48,13 +47,10 @@ const CreateAnimalForm = () => {
   return (
         <form className='d-flex flex-column mb-2 px-5 pb-3' onChange={(e) => handleChange(e)} onSubmit={(e) => handleSubmit(e)}>
             <div>
-                <CustomInputWithLabel label='Name' name='name'/>
-                <CustomInputWithLabel label='Description' name='description'/>
-                <CustomInputWithLabel label='Age' name='age' type='number'/>
-                <div className="form-group d-flex flex-column py-2">
-                    <label htmlFor='category'>Category</label>
-                    <CustomRadioButton name='category' buttonData={animalCategories}/>
-                </div>
+                <CustomInputWithLabel value={animalData.name} label='Name' name='name'/>
+                <CustomInputWithLabel value={animalData.description} label='Description' name='description'/>
+                <CustomInputWithLabel value={animalData.age} label='Age' name='age' type='number'/>
+                <AnimalCategoryInput value={animalData.category} name='category'/>
             </div>
             <div className='py-2'>
                 <button type="submit" className="w-100 btn btn-info">Submit</button>

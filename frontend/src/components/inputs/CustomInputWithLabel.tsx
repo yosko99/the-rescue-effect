@@ -4,9 +4,10 @@ interface Props {
     label: string;
     name: string;
     type?: string;
+    value: string | number;
 }
 
-const CustomInputWithLabel:React.FC<Props> = ({ label, name, type }) => {
+const CustomInputWithLabel:React.FC<Props> = ({ label, name, type, value }) => {
   return (
         <div className="form-group py-2">
             <label htmlFor={name}>{label}</label>
@@ -16,6 +17,7 @@ const CustomInputWithLabel:React.FC<Props> = ({ label, name, type }) => {
                 className="form-control"
                 name={name}
                 id={name}
+                defaultValue={value}
                 placeholder={label}
             />
         </div>

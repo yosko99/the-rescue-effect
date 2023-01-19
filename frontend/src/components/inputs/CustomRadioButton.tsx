@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { ButtonGroup, ToggleButton } from 'react-bootstrap';
 
@@ -10,11 +10,10 @@ interface IRadioButton {
 interface Props {
     buttonData: IRadioButton[]
     name: string;
+    value: string | number;
 }
 
-const CustomRadioButton: React.FC<Props> = ({ buttonData, name }) => {
-  const [radioValue, setRadioValue] = useState(buttonData[0].value);
-
+const CustomRadioButton: React.FC<Props> = ({ buttonData, name, value }) => {
   return (
     <ButtonGroup>
     {buttonData.map((button, index: number) => (
@@ -22,11 +21,10 @@ const CustomRadioButton: React.FC<Props> = ({ buttonData, name }) => {
         key={index}
         id={button.value}
         type="radio"
-        variant={button.value === radioValue ? 'primary' : 'light'}
+        variant={button.value === value ? 'primary' : 'light'}
         name={name}
         value={button.value}
-        checked={radioValue === button.value}
-        onChange={(e) => setRadioValue(e.currentTarget.value)}
+        checked={button.value === value}
       >
         {button.label}
       </ToggleButton>

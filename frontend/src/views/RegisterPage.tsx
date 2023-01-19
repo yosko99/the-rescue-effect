@@ -4,12 +4,11 @@ import { useMutation } from '@apollo/client';
 import { Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
+import AnimalCategoryInput from '../components/inputs/AnimalCategoryInput';
 import CustomInputWithLabel from '../components/inputs/CustomInputWithLabel';
-import CustomRadioButton from '../components/inputs/CustomRadioButton';
+import GenderInput from '../components/inputs/GenderInput';
 import CustomSpinner from '../components/utils/custom/CustomSpinner';
 import MainLogo from '../components/utils/MainLogo';
-import animalCategories from '../constants/animalCategories';
-import genders from '../constants/genders';
 import { CREATE_USER_MUTATION, ICreateUserResponse } from '../mutations/user.mutations';
 import { ICreateUser } from '../types/user.type';
 
@@ -72,17 +71,11 @@ const RegisterPage = () => {
 
             <form className='d-flex flex-column mb-2' onChange={(e) => handleChange(e)} onSubmit={(e) => handleSubmit(e)}>
                 <div className='pb-2'>
-                    <CustomInputWithLabel label='Name' name='name'/>
-                    <CustomInputWithLabel label='Email' name='email' type='email'/>
-                    <CustomInputWithLabel label='Password' name='password' type='password'/>
-                    <div className="form-group d-flex flex-column py-2">
-                        <label htmlFor='gender'>Gender</label>
-                        <CustomRadioButton name='gender' buttonData={genders}/>
-                    </div>
-                    <div className="form-group d-flex flex-column py-2">
-                        <label htmlFor='animalPreferences'>Animal preferences</label>
-                        <CustomRadioButton name='animalPreferences' buttonData={animalCategories}/>
-                    </div>
+                    <CustomInputWithLabel value={userData.name} label='Name' name='name'/>
+                    <CustomInputWithLabel value={userData.email} label='Email' name='email' type='email'/>
+                    <CustomInputWithLabel value={userData.password} label='Password' name='password' type='password'/>
+                    <GenderInput value={userData.gender}/>
+                    <AnimalCategoryInput value={userData.animalPreferences} name='animalPreferences'/>
                 </div>
 
                 {loading ? <CustomSpinner /> : responseAlert}

@@ -66,8 +66,8 @@ const LoginPage = () => {
 
             <form className='d-flex flex-column mb-2' onChange={(e) => handleChange(e)} onSubmit={(e) => handleSubmit(e)}>
                 <div className='pb-2'>
-                    <CustomInputWithLabel label='Email' name='email' type='email'/>
-                    <CustomInputWithLabel label='Password' name='password' type='password'/>
+                    <CustomInputWithLabel value={loginData.email} label='Email' name='email' type='email'/>
+                    <CustomInputWithLabel value={loginData.password} label='Password' name='password' type='password'/>
                 </div>
 
                 {loading ? <CustomSpinner /> : responseAlert}
