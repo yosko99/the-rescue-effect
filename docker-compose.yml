@@ -21,6 +21,16 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:6.2-alpine
+    networks:
+      - app-network
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
+    command: redis-server
+
 networks:
   app-network:
     driver: bridge
