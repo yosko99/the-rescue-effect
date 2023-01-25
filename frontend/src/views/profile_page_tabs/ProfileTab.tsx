@@ -5,6 +5,7 @@ import { Col, Image, Row } from 'react-bootstrap';
 
 import ProfileTabsTemplate from '../../components/profile_page/ProfileTabsTemplate';
 import Loading from '../../components/utils/Loading';
+import TOKEN_HEADER from '../../constants/token';
 import useAuth from '../../hooks/useAuth';
 import useErrorHandle from '../../hooks/useErrorHandle';
 import { GET_CURRENT_USER_QUERY } from '../../queries/user.queries';
@@ -15,7 +16,7 @@ const ProfileTab = () => {
 
   const { data, loading, error } = useQuery(
     GET_CURRENT_USER_QUERY,
-    { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
+    { context: { ...TOKEN_HEADER } }
   );
 
   useErrorHandle(error);

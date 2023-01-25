@@ -3,9 +3,10 @@ import React, { useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { Alert } from 'react-bootstrap';
 
+import TOKEN_HEADER from '../../constants/token';
 import { UPDATE_CURRENT_USER_MUTATION } from '../../mutations/user.mutations';
 import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../../queries/animal.queries';
-import { GET_CURRENT_USER_QUERY } from '../../queries/user.queries';
+import refetchUserOnComplete from '../../refetch/refetchUserOnComplete';
 import { IUpdateCurrentUser, IUser } from '../../types/user.type';
 import AnimalCategoryInput from '../inputs/AnimalCategoryInput';
 import CustomInputWithLabel from '../inputs/CustomInputWithLabel';
@@ -24,9 +25,9 @@ const UpdateCurrentUserForm: React.FC<Props> = ({ currentUser }) => {
 
   const [alert, setAlert] = useState<React.ReactNode>(null);
 
-  const [updateCurrentUser] = useMutation(
+  const [updateCurrentUser, { client }] = useMutation(
     UPDATE_CURRENT_USER_MUTATION,
-    { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
+    { context: TOKEN_HEADER }
   );
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
@@ -47,9 +48,9 @@ const UpdateCurrentUserForm: React.FC<Props> = ({ currentUser }) => {
     updateCurrentUser({
       variables: { input: userData },
       refetchQueries: [
-        GET_CURRENT_USER_QUERY,
         GET_ANIMALS_FOR_ADOPTION_QUERY
-      ]
+      ],
+      onCompleted: () => refetchUserOnComplete(client)
     });
     setAlert(null);
     setAlert(<Alert variant='success' className='text-center mt-2'>

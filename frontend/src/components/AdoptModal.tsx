@@ -5,6 +5,7 @@ import { Button, Modal, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 import adoptGIF from '../assets/adopt.gif';
+import TOKEN_HEADER from '../constants/token';
 import { ADOPT_ANIMAL_MUTATION } from '../mutations/user.mutations';
 import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../queries/animal.queries';
 import { IAnimal } from '../types/animal.type';
@@ -18,7 +19,7 @@ interface Props {
 const AdoptModal:React.FC<Props> = ({ onHide, show, animal }) => {
   const [adoptAnimal] = useMutation(
     ADOPT_ANIMAL_MUTATION,
-    { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
+    { context: { ...TOKEN_HEADER } }
   );
 
   const handleHide = () => {

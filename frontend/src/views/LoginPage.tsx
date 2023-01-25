@@ -19,7 +19,7 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
 
-  const [login, { loading }] = useMutation(LOGIN_MUTATION);
+  const [login, { loading, client }] = useMutation(LOGIN_MUTATION);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as HTMLInputElement;
@@ -40,10 +40,11 @@ const LoginPage = () => {
         setResponseAlert(<Alert variant='danger'>{err.message}</Alert>);
       },
       onCompleted: ({ login } : ILoginResponse) => {
-        setResponseAlert(<Alert variant='success'>{login.message}</Alert>);
         localStorage.setItem('token', login.token);
+        setResponseAlert(<Alert variant='success'>{login.message}</Alert>);
+        client.cache.reset();
         setTimeout(() => {
-          navigate('/');
+          window.location.reload();
         }, 1000);
       }
     });

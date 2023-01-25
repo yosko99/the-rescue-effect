@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 import { Row, Col, Image } from 'react-bootstrap';
 
 import happyDogIMG from '../assets/happy-dog.jpg';
+import TOKEN_HEADER from '../constants/token';
 import { GET_ANIMALS_FOR_ADOPTION_QUERY } from '../queries/animal.queries';
 import { IAnimal } from '../types/animal.type';
 import AnimalCard from './AnimalCard';
@@ -11,7 +12,7 @@ import AnimalCard from './AnimalCard';
 const AnimalsForAdoption = () => {
   const { data, loading } = useQuery(
     GET_ANIMALS_FOR_ADOPTION_QUERY,
-    { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
+    { context: { ...TOKEN_HEADER } }
   );
 
   if (loading) {

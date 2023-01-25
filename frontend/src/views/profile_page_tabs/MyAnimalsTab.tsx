@@ -8,6 +8,7 @@ import sadDogIMG from '../../assets/sad-dog.jpeg';
 import AnimalCard from '../../components/AnimalCard';
 import ProfileTabsTemplate from '../../components/profile_page/ProfileTabsTemplate';
 import Loading from '../../components/utils/Loading';
+import TOKEN_HEADER from '../../constants/token';
 import useAuth from '../../hooks/useAuth';
 import useErrorHandle from '../../hooks/useErrorHandle';
 import { GET_CURRENT_USER_QUERY } from '../../queries/user.queries';
@@ -18,7 +19,7 @@ const MyAnimalsTab = () => {
 
   const { data, loading, error } = useQuery(
     GET_CURRENT_USER_QUERY,
-    { context: { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } } }
+    { context: { ...TOKEN_HEADER } }
   );
 
   const navigate = useNavigate();

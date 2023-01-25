@@ -24,7 +24,7 @@ const RegisterPage = () => {
 
   const navigate = useNavigate();
 
-  const [createUser, { loading }] = useMutation(CREATE_USER_MUTATION);
+  const [createUser, { loading, client }] = useMutation(CREATE_USER_MUTATION);
 
   const handleChange = (e: React.FormEvent<HTMLFormElement>) => {
     const target = e.target as HTMLInputElement;
@@ -45,10 +45,11 @@ const RegisterPage = () => {
         setResponseAlert(<Alert variant='danger'>{err.message}</Alert>);
       },
       onCompleted: ({ createUser } : ICreateUserResponse) => {
-        setResponseAlert(<Alert variant='success'>{createUser.message}</Alert>);
         localStorage.setItem('token', createUser.token);
+        setResponseAlert(<Alert variant='success'>{createUser.message}</Alert>);
+        client.cache.reset();
         setTimeout(() => {
-          navigate('/');
+          window.location.reload();
         }, 1000);
       }
     });
